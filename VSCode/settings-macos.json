@@ -1,0 +1,232 @@
+{
+  // ============================== 可视化设置 ==============================
+  "workbench.colorTheme": "One Dark Pro",
+  "workbench.iconTheme": "vscode-icons-mac",
+  "window.zoomLevel": 1,
+  "editor.fontSize": 15,
+  "vsicons.dontShowNewVersionMessage": true,
+  "editor.accessibilitySupport": "on",
+  "accessibility.signals.lineHasError": { "sound": "off" },
+  "accessibility.signals.lineHasFoldedArea": { "sound": "off" },
+  "accessibility.signals.lineHasBreakpoint": { "sound": "off" },
+  "accessibility.signals.lineHasInlineSuggestion": { "sound": "off" },
+  "accessibility.signals.terminalQuickFix": { "sound": "off" },
+  "accessibility.signals.onDebugBreak": { "sound": "off" },
+  "accessibility.signals.noInlayHints": { "sound": "off" },
+  "accessibility.signals.taskCompleted": { "sound": "off" },
+  "accessibility.signals.taskFailed": { "sound": "off" },
+  "accessibility.signals.terminalCommandFailed": { "sound": "off" },
+  "accessibility.signals.notebookCellFailed": { "sound": "off" },
+  "accessibility.signals.diffLineInserted": { "sound": "off" },
+  "accessibility.signals.diffLineDeleted": { "sound": "off" },
+  "accessibility.signals.diffLineModified": { "sound": "off" },
+
+  // ============================== Vim 设置 ==============================
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.hlsearch": true,
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.leader": "<space>",
+  "vim.digraphs": {},
+  "vim.vimrc.enable": true,
+  "vim.vimrc.path": "~/Desktop/Github/PrivateRepo/Usage/config/VSCode/vimrc-vscode",
+  "vim.insertModeKeyBindings": [
+    { "before": ["j", "j"], "after": ["<Esc>"] }
+  ],
+  "vim.normalModeKeyBindingsNonRecursive": [
+    { "before": ["<leader>", "d"], "after": ["d", "d"] },
+    { "before": ["<C-n>"], "commands": [":nohl"] }
+  ],
+  "vim.handleKeys": {
+    "<C-a>": false,
+    "<C-f>": false
+  },
+
+  // ============================== LaTeX 设置 ==============================
+  "latex-workshop.intellisense.bibtexJSON.replace": {},
+  "latex-workshop.intellisense.biblatexJSON.replace": {},
+  "latex-workshop.intellisense.package.enabled": true,
+  "latex-workshop.showContextMenu": true,
+  "latex-workshop.message.error.show": false,
+  "latex-workshop.message.warning.show": false,
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  "latex-workshop.latex.autoClean.run": "onFailed",
+  "latex-workshop.latex.recipe.default": "lastUsed",
+  "latex-workshop.view.pdf.viewer": "external",
+  "latex-workshop.view.pdf.ref.viewer": "auto",
+  "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+  "latex-workshop.view.pdf.external.viewer.command": "/Applications/PDF Expert.app",
+  "latex-workshop.view.pdf.external.viewer.args": ["%PDF%"],
+  "latex-workshop.view.pdf.external.synctex.command": "/Applications/PDF Expert.app",
+  "latex-workshop.view.pdf.external.synctex.args": [
+    "-forward-search",
+    "%TEX%",
+    "%LINE%",
+    "-reuse-instance",
+    "-inverse-search",
+    "/Applications/Visual\\ Studio\\ Code.app/Contents/Resources/app/bin/code -r -g \"%f:%l\"",
+    "%PDF%"
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "xelatex",
+      "command": "/Library/TeX/texbin/xelatex",
+      "args": ["-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOCFILE%"]
+    },
+    {
+      "name": "pdflatex",
+      "command": "/Library/TeX/texbin/pdflatex",
+      "args": ["-synctex=1", "-interaction=nonstopmode", "-file-line-error", "%DOCFILE%"]
+    },
+    {
+      "name": "latexmk",
+      "command": "/Library/TeX/texbin/latexmk",
+      "args": ["-synctex=1", "-interaction=nonstopmode", "-file-line-error", "-pdf", "-outdir=%OUTDIR%", "%DOCFILE%"]
+    },
+    {
+      "name": "bibtex",
+      "command": "/Library/TeX/texbin/bibtex",
+      "args": ["%DOCFILE%"]
+    }
+  ],
+  "latex-workshop.latex.recipes": [
+    { "name": "PDFLaTeX", "tools": ["pdflatex"] },
+    { "name": "PDFLaTeX*2", "tools": ["pdflatex", "pdflatex"] },
+    { "name": "XeLaTeX", "tools": ["xelatex"] },
+    { "name": "BibTeX", "tools": ["bibtex"] },
+    { "name": "LaTeXmk", "tools": ["latexmk"] },
+    { "name": "xelatex -> bibtex -> xelatex*2", "tools": ["xelatex", "bibtex", "xelatex", "xelatex"] },
+    { "name": "pdflatex -> bibtex -> pdflatex*2", "tools": ["pdflatex", "bibtex", "pdflatex", "pdflatex"] }
+  ],
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux", "*.bbl", "*.blg", "*.idx", "*.ind", "*.lof", "*.lot",
+    "*.out", "*.toc", "*.acn", "*.acr", "*.alg", "*.glg", "*.glo",
+    "*.gls", "*.ist", "*.fls", "*.log", "*.fdb_latexmk"
+  ],
+
+  // ============================== 编辑器设置 ==============================
+  "editor.formatOnSave": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.codeActionsOnSave": {},
+  "[markdown]": {
+    "editor.quickSuggestions": { "comments": "on", "strings": "on", "other": "on" }
+  },
+  "[latex]": {
+    "editor.defaultFormatter": "James-Yu.latex-workshop"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+
+  // ============================== 终端设置 ==============================
+  "terminal.integrated.fontFamily": "Hack Nerd Font, Menlo, Monaco, 'Courier New', monospace",
+  "terminal.integrated.sendKeybindingsToShell": true,
+  "terminal.integrated.inheritEnv": false,
+  "terminal.integrated.env.osx": {
+    "FIG_NEW_SESSION": "1",
+    "Q_NEW_SESSION": "1"
+  },
+  "terminal.external.osxExec": "kitty.app",
+
+  // ============================== 文件/资源管理器设置 ==============================
+  "files.autoSave": "afterDelay",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "security.workspace.trust.untrustedFiles": "open",
+
+  // ============================== 代码运行/调试设置 ==============================
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.ignoreSelection": true,
+  "code-runner.preserveFocus": false,
+  "code-runner.saveFileBeforeRun": true,
+  "code-runner.saveAllFilesBeforeRun": true,
+  "code-runner.executorMap": {
+    "javascript": "node",
+    "java": "cd $dir && javac $fileName && java $fileNameWithoutExt",
+    "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "objective-c": "cd $dir && gcc -framework Cocoa $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "php": "php",
+    "python": "python -u",
+    "perl": "perl",
+    "perl6": "perl6",
+    "ruby": "ruby",
+    "go": "go run",
+    "lua": "lua",
+    "groovy": "groovy",
+    "powershell": "powershell -ExecutionPolicy ByPass -File",
+    "bat": "cmd /c",
+    "shellscript": "bash",
+    "fsharp": "fsi",
+    "csharp": "scriptcs",
+    "vbscript": "cscript //Nologo",
+    "typescript": "ts-node",
+    "coffeescript": "coffee",
+    "scala": "scala",
+    "swift": "swift",
+    "julia": "julia",
+    "crystal": "crystal",
+    "ocaml": "ocaml",
+    "r": "Rscript",
+    "applescript": "osascript",
+    "clojure": "lein exec",
+    "haxe": "haxe --cwd $dirWithoutTrailingSlash --run $fileNameWithoutExt",
+    "rust": "cd $dir && rustc $fileName && $dir$fileNameWithoutExt",
+    "racket": "racket",
+    "scheme": "csi -script",
+    "ahk": "autohotkey",
+    "autoit": "autoit3",
+    "dart": "dart",
+    "pascal": "cd $dir && fpc $fileName && $dir$fileNameWithoutExt",
+    "d": "cd $dir && dmd $fileName && $dir$fileNameWithoutExt",
+    "haskell": "runhaskell",
+    "nim": "nim compile --verbosity:0 --hints:off --run",
+    "lisp": "sbcl --script",
+    "kit": "kitc --run",
+    "v": "v run",
+    "sass": "sass --style expanded",
+    "scss": "scss --style expanded",
+    "less": "cd $dir && lessc $fileName $fileNameWithoutExt.css",
+    "FortranFreeForm": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "fortran-modern": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "fortran_fixed-form": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "fortran": "cd $dir && gfortran $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    "sml": "cd $dir && sml $fileName"
+  },
+  "lldb.launch.terminal": "external",
+  "lldb.dbgconfig": { "code-runner.runInTerminal": true },
+  "cmake.configureOnOpen": true,
+  "launch": { "configurations": [] },
+
+  // ============================== 语言特定设置 ==============================
+  // C/C++
+  "C_Cpp.default.cppStandard": "c++20",
+  "C_Cpp.codeAnalysis.clangTidy.enabled": true,
+  // Python
+  "python.defaultInterpreterPath": "/opt/homebrew/bin/python3",
+  "python.autoComplete.extraPaths": [],
+  "python.analysis.extraPaths": [],
+  // Jupyter
+  "jupyter.askForKernelRestart": false,
+
+  // ============================== 扩展设置 ==============================
+  // GitHub Copilot
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false
+  },
+  "github.copilot.nextEditSuggestions.enabled": true,
+  // Live Server
+  "liveServer.settings.AdvanceCustomBrowserCmdLine": "",
+  "liveServer.settings.ChromeDebuggingAttachment": false,
+  "liveServer.settings.donotShowInfoMsg": true,
+  // 其他扩展
+  "todohighlight.isEnable": true,
+  "redhat.telemetry.enabled": true,
+
+  // ============================== Git 设置 ==============================
+  "git.openRepositoryInParentFolders": "never"
+}

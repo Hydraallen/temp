@@ -1,0 +1,71 @@
+[
+  // ============================== 补全/建议导航 ==============================
+  // Tab 接受选中的建议
+  {
+    "key": "tab",
+    "command": "acceptSelectedSuggestion",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "shift+tab",
+    "command": "acceptSelectedSuggestion",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  // 多建议时 Tab/Shift+Tab 上下选择
+  {
+    "key": "tab",
+    "command": "selectNextSuggestion",
+    "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+  },
+  {
+    "key": "shift+tab",
+    "command": "selectPrevSuggestion",
+    "when": "editorTextFocus && suggestWidgetMultipleSuggestions && suggestWidgetVisible"
+  },
+
+  // ============================== 面板切换 ==============================
+  {
+    "key": "ctrl+alt+t",
+    "command": "workbench.action.togglePanel"
+  },
+  // 禁用默认的 Ctrl+T 面板切换
+  {
+    "key": "ctrl+t",
+    "command": "-editor.action.transposeLetters",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+t",
+    "command": "-extension.vim_ctrl+t",
+    "when": "editorTextFocus && vim.active && vim.use<C-t> && !inDebugRepl"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "-workbench.action.togglePanel"
+  },
+
+  // ============================== 编辑器/终端焦点 ==============================
+  {
+    "key": "ctrl+2",
+    "command": "workbench.action.focusRightGroup"
+  },
+  {
+    "key": "ctrl+3",
+    "command": "workbench.action.terminal.toggleTerminal"
+  },
+  {
+    "key": "shift+ctrl+2",
+    "command": "workbench.action.focusSecondEditorGroup"
+  },
+  // 禁用默认的 Ctrl+2
+  {
+    "key": "ctrl+2",
+    "command": "-workbench.action.focusSecondEditorGroup"
+  },
+
+  // ============================== 编辑器分屏 ==============================
+  {
+    "key": "ctrl+d",
+    "command": "workbench.action.splitEditorRight"
+  }
+]

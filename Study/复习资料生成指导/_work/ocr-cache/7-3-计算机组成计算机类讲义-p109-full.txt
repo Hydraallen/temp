@@ -1,0 +1,90 @@
+
+天行电力培训
+图7-9 GPU/CPU内部架构比较
+传统的GPU基于SIMD的架构。SIMD即Single Instruction Multiple Data，单指令多数据。
+GPU体系架构在不断的发展，以GT200体系架构为代表对GPU的并行层次进行分析。Tesla GT200由两部分组成，分别是可伸缩流处理器阵列(Scalable Streaming Processor Array，SPA)和存储器系统，它们由一个片上互联网络连接。如图7-10所示，可伸缩流处理器阵列由若干个线程处理器群(Thread Processing Cluster，TPC)构成，每个TPC包含2～3个流多处理器(Streaming Multiprocessor，SM)，每个流多处理器中包含8个流处理器(Streaming Processor，SP)。流处理器有独立的寄存器和指令指针，但缺少取指和调度单元，而流多处理器才拥有完整前端，包括取值、译码、发射等。从结构上看，每个流多处理器相当于一个8路单指令流多数据流(Single Instruction Multiple Data，SIMD)处理器，不同的是，GPU实现了自动向量机化，NVIDIA将之命名为单指令流多线程(Single Instruction Multiple Thread，SIMT)
+在GPU中，流多处理器才能被称为真正的完整核心，整个可伸缩流处理器阵列可以看成是由多个流多处理器组成的多单指令流多线程(Multiple SIMT，MSIMT)系统。Tesla GT200架构在可编程性和灵活性与硬件的复杂度和功耗之间取得了很好的折衷，线程被组织成多个线程块(Thread Block)，分配到各个流多处理器上，而每个线程块内的线程再被以单指令流多线程的方式交给流处理器运行。
+由于CPU和GPU设计目标的不同导致了两者在架构、并行层次和性能方面差异较大：
+➢ CPU的重线程与GPU的轻线程
+➢ CPU的MIMD多核与GPU的SIMT众核（x7560）
+➢ CPU内存、缓存与GPU存储器
+GPU是以大量线程实现面向吞吐量的数据并行计算，适合于处理计算密度高、逻辑分支简单的大规模数据并行负载；而CPU则有复杂的控制逻辑和大容量的缓存减小延迟，擅长复杂逻辑运算。
+
+图7-10 Tesla GT200内部结构
+Global Block Scheduler
+TPC0
+SM Controller 0
+SM0 SM1 SM2
+SP SP SP SP SP SP SP SP
+SP SP SP SP SP SP SP SP
+SP SP SP SP SP SP SP SP
+SP SP SP SP SP SP SP SP
+24KB L1
+Texture Cache
+SM Controller 1
+SM0 SM1 SM2
+SP SP SP SP SP SP SP SP
+SP SP SP SP SP SP SP SP
+SP SP SP SP SP SP SP SP
+SP SP SP SP SP SP SP SP
+24KB L1
+Texture Cache
+SM Controller 7
+SM0 SM1 SM2
+SP SP SP SP SP SP SP SP
+SP SP SP SP SP SP SP SP
+SP SP SP SP SP SP SP SP
+SP SP SP SP SP SP SP SP
+24KB L1
+Texture Cache
+PCIe x16
+SPA
+L2 Texture
+Cache
+L2 Texture
+Cache
+L2 Texture
+Cache
+L2 Texture
+Cache
+L2 Texture
+Cache
+L2 Texture
+Cache
+L2 Texture
+Cache
+L2 Texture
+Cache
+GDDR3
+Memory
+Controller
+GDDR3
+Memory
+Controller
+GDDR3
+Memory
+Controller
+GDDR3
+Memory
+Controller
+GDDR3
+Memory
+Controller
+GDDR3
+Memory
+Controller
+GDDR3
+Memory
+Controller
+GDDR3
+Memory
+Controller
+Memory
+
+知识点4：GPU编程
+CUDA的基本思想是支持大量的线程级并行（Thread Level Parallel），并在硬件中动态地调度和执行这些线程。异构思想：Host + Device(Coprocessor)：让GPU来运行一些能够被高度线程化的代码。GPU与
+
+107
+
+CS 扫描全能王
+3亿人都在用的扫描App

@@ -1,0 +1,60 @@
+
+ARTIFICIAL
+INTELLIGENCE
+MACHINE
+LEARNING
+DEEP
+LEARNING
+1950's 1960's 1970's 1980's 1990's 2000's 2010's
+Since an early flah of optimism in the 1950s, smaller subsets of artificial intelligence - first machine learning, then deep learning, a subset of machine learning - have created ever larger disruptions.
+
+第二节 机器学习
+
+知识点1：机器学习
+从数据中自动学习知识的一种人工智能方法。
+机器学习从数据中提取特征，寻找数据和任务目标之间的关系：函数$f$。
+
+知识点2：机器学习方法三要素
+模型、策略、算法。
+模型：用来描述客观世界的数学模型。策略：损失函数和正则化项。算法：最优化算法。
+
+知识点3：机器学习分类
+有监督学习（Supervised Learning）有标签
+无监督学习（Unsupervised Learning）无标签
+半监督学习（Semi-Supervised Learning）
+强化学习（Reinforcement learning）
+
+知识点4：监督学习
+功能分类：分类（Classification）、回归（Regression）
+常见方法：线性回归、逻辑回归、决策树、线性判别分析、AdaBoost、支持向量机。
+
+知识点5：无监督学习
+功能分类：聚类（Clustering）、降维（Dimensionality）
+常见方法：K均值聚类、主成分分析、期望最大化算法。
+
+知识点6：强化学习
+强化学习又称再励学习、评价学习或增强学习，是机器学习的范式和方法论之一，用于描述和解决智能体（agent）在与环境的交互过程中通过学习策略以达成回报最大化或实现特定目标的问题。
+
+知识点7：损失函数（Loss Function）
+假设$y_l = f(x_l)$。损失函数用来计算真实值$y_l$与预测值$f(x_l)$间的差值。
+
+知识点8：训练集、测试集
+训练集用于模型训练；测试集用于模型泛化能力评估。
+
+知识点9：过拟合(over-fitting)、欠拟合(under-fitting)
+训练集上的表现 测试集上的表现 结论
+不好 不好 欠拟合
+好 不好 过拟合
+
+Underfitting
+(too simple to explain
+the variance)
+Appropriate-fitting
+Overfitting
+(overfitting - too
+good to be true)
+
+44
+
+CS 扫描全能王
+3亿人都在用的扫描App

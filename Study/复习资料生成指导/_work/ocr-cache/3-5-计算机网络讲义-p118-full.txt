@@ -1,0 +1,14 @@
+
+天行电力培训
+● (3)非匿名FTP
+前面所述的 FTP URL 用于访问匿名 FTP 服务器。对于普通的 FTP 服务器，可以用加入了账号、密码的 FTP URL 来表示，格式如下：
+ftp://username: pas sword@ftp. foo. com/home/foo/homepage. html
+在这种形式的 URL 中 username 即用户在服务器上的登录账号，password 即该账号的口令。应注意到的是 URL 中无法对口令进行隐藏，因此在使用这种形式的 URL 时要注意是否有人窥视，也不要把它放在别人可看到的链接上。
+● 文件(file)
+文件 URL 是索引本地盘上的文件。换句话说，它们引用浏览器所在系统上的文件。对本地文件，文件URL采用下列两种形式之一：第一部分是空主机名(有3个而非2个斜杠)，或用localhost作主机名。
+file://dirl/dir2/file
+file://localhost/dirl/dir2/file
+根据浏览器的不同，以上两种形式中总有一个能工作。文件 URL 很类似于 FTP URL，实际上，如果 URL 的主机部分不是空，也未写为 localhost，浏览器将利用 FTP 找到给出的文件。
+116
+CS 扫描全能王
+3亿人都在用的扫描App

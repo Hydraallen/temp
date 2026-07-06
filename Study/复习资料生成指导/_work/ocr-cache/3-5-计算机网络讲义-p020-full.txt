@@ -1,0 +1,33 @@
+
+天行电力培训
+
+图1-11 TCP/IP协议栈
+
+Application
+Applications
+Presentation  SMTP  FTP  HTTP  DNS  SNMP  TELNET  …
+Session
+Transport  SCTP  TCP  UDP
+Network
+(Internet)  ICMP  IGMP  IP  RARP  ARP
+Data link  Protocols defined by
+the underlying networks
+(host-to-network)
+Physical
+
+● 主机—网络层
+TCP/IP在这一层没有定义任何专用的协议，在这一层上是一些广泛使用着的网络，LANs表示各种局域网，WANs表示各种广域网。也就是说，因特网协议是在已有的网络之上的一组协议，或者说TCP/IP是互联网的协议。虽然TCP/IP并没有指定这一层的专用协议，但是TCP/IP是支持现有的局域网和广域网的标准和这些网络的协议（如局域网IEEE802.3协议，广域网的X.25协议等），但没有必要将它们包含到TCP/IP协议栈中来，而是把这一层的协议划分到被互连的网络中。
+
+● 互联网层(internet)
+这一层是因特网的关键层，它的任务是将分组传送到因特网上的任一台主机上。IP是Internetworking Protocol的简称，叫做互联网协议。它提供无连接服务。为使IP能很好地在网络互连中起到应有的作用，它还需要4个支持的协议相配合，它们是：ARP(Address Resolution Protocol，地址解析协议)，RARP（Reverse Address Resolution Protocol，逆地址解析协议）、ICMP（Internet ControlMessage Protocol，因特网控制报文协议）和IGMP（Internet Group Management Protocol，因特网组管理协议）。
+
+● 传输层
+这一层有3个协议：UDP（User Datagram Protocol，用户数据报协议），它是传输层的无连接服务；TCP（Transmission Control Protocol，传输控制协议），是传输层面向连接的服务；SCTP (Stream Control Transmission Protocol，流控制传输协议)。
+
+● 应用层
+在图2-2中列出了若干协议，就不一一解释。需要说明的是在互联网层中的IP和4个支持协议是相互关联的。而在传输层和应用层的各个协议，它们是相互独立使用的，如TCP和UDP
+
+18
+
+CS 扫描全能王
+3亿人都在用的扫描App

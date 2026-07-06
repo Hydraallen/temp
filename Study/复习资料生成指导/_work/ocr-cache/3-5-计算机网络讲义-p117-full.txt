@@ -1,0 +1,41 @@
+
+天行电力培训
+
+如果在URL中包括端口号，那么就将它写在主机名和目录之间，例如：
+http://my-public-access unix. com:150/pub/file
+URL中的目录则是信息在主机上的文件所在。此目录可以是一个实际的目录名或文件名，
+或者是协议用于指定信息所在的另一种指示器。（例如，Gopher的目录不是外在的目录。）
+在URL中允许使用的字符包括:字母A-Z, a-z, 数字0-9, 美元符号($), 加号(+), 减号(－),
+下划线(_)和句点(.)。若要使用其它字符，则必须用特殊的URL换码(escape code)字符来代替
+以免被误认为是URL自身的某一部分。
+URL换码序列是以百分号加上两个字符形成的ISO-Latin-1字符集(标准ASCII码的超集)。
+例如：%20是空格符，%3f是问号，%2f是斜杠。
+假设有一个目录叫All My Files,这可能是Macintosh机上的一个目录(因为其中带有空格。)。
+则其URL可能被写成:
+http://myhost. com/harddrive/All  My Files/www/file. html
+如果这个URL被放在一个链接标签的引用处，它可能是正确的（但也仅在引用时才可能是
+正确的）。但由于空格在URL中是一个特殊字符，某些浏览器可能因此不能正确地识别这样的
+路径名。为了与所有的浏览器兼容，应将空格以%20代替如下:
+http://myhost. com/harddrive/A11%20My%20File s/www/file. html
+URL地址格式有许多种，下面介绍几种常见的类型。
+■ HTTP
+HTTP是Internet上最流行的URL类型，它是超文本传输协议(Hypertext Transfer Protocol)
+的缩写，也是www服务器用于传输HTML页的协议。
+HTTP URL也符合基本的URL形式，如：http://www. foo. com/home/foo/
+如果URL以斜杠作为结尾，则它的最后一部分被认为是目录名，这种我们所习惯了的URL
+文件是一种“默认”的文件，这时HTTP服务器通常会自动地从该目录中打开名为index. html
+的文件。（所以用户在设计Web页时，主页对应的文件应命名为index. html，并把它放在所有
+特用文件的最上层目录。这是很明智的做法。）
+当然，我们也可以在URL中直接指定文件名，此时，URL末尾所写的文件就是将要调入的
+文件。
+■ (2)匿名FTP
+FTP URL用于访问FTP服务器上的文件，FTP服务器通常是匿名的，即用户可以用
+anonymous作为登录名(login ID)，并以电子邮件地址作为口令。FTP URL同样遵循“标准”的
+URL格式，如：ftp://ftp. com/home/foo， ftp://ftp. foo. com/home/foo/homepage. html
+由于用户可以用FTP访问文件或目录，在URL末尾对斜杠的要求也与HTTP中不同。上
+面第一行URL将得到foo目录下的所有文件的列表，而第二行则得到并处理foo目录下名为
+homepage. html的文件。
+
+115
+CS 扫描全能王
+3亿人都在用的扫描App

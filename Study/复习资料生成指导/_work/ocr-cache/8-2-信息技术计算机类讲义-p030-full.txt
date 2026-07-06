@@ -1,0 +1,45 @@
+
+产生的最终结果经过简单连接就形成了完整的结果集，因此 Reduce 也可以在并行环境下执行。
+“Map(映射)”和“Reduce(归约)”是 MapReduce 模型的核心：用户通过定义一个 Map 函数，处理 key-value（键值对）以生成一个中间 key-value 集合，MapReduce 库将所有拥有相同的 key 的中间状态 key 合并起来传递到 Reduce 函数：Reduce 函数用于合并所有先前 Map 过后的有相同 key 的中间量。
+
+输入  Map任务  Shuffle  Reduce任务  输出
+分片0  →  map()  →  reduce()  →  输出0
+分片1  →  map()  →  reduce()  →  输出1
+分片2  →  map()  →  reduce()  →  输出2
+分片3  →  map()  →  reduce()  →  输出2
+分片4  →  map()  →  reduce()  →  输出2
+
+WordCount 示例：统计单词出现次数
+
+海量数据存储
+数据划分
+Map  Map  Map  Map
+(th,1)  (today,1)  (good,1)  (today,1)
+(weather,1)  (it,1)  (weather,1)  (hai,1)
+(th,1)  (good,1)  (good,1)  (weather,1)
+Combiner  Combiner  Combiner  Combiner
+(th,1)  (today,1)  (good,1)  (today,1)
+(weather,1)  (it,1)  (weather,1)  (hai,1)
+(th,1)  (good,1)  (good,1)  (weather,1)
+中间结果
+Barrier  Barrier  Barrier  Barrier  Shuffle
+(good,1)  (it,1)  (weather,1)
+(good,1)  (it,1)  (weather,1)
+(good,1)  (it,1)  (weather,1)
+Reduce  Reduce  Reduce  Reduce
+(good,5)  (it,3)  (weather,3)
+(hai,1)  (th,3)  (today,2)
+计算结果
+
+知识点 16：Hadoop
+Hadoop 是一个由 Apache 基金会所开发的分布式系统基础架构。用户可以在不了解分布式底层细节的情况下，开发分布式程序。充分利用集群的威力进行高速运算和存储。
+Hadoop 的核心组件：
+Hadoop Common：Hadoop 通用组件。
+Hadoop HDFS：Hadoop 分布式存储系统。
+Yarn：从 hadoop2.0 开始引入 Yarn 模块，Yarn 可为各类计算框架提供资源的管理和调度，主要用于管理集群当中的资源以及调度运行在 yarn 上面的各种任务。
+MapReduce：并行处理框架。
+
+28
+
+CS 扫描全能王
+3亿人都在用的扫描App

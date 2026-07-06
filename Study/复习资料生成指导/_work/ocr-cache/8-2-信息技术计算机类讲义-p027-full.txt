@@ -1,0 +1,60 @@
+
+关系型数据库
+OldSQL
+Infobright  Netezza  ParAccel  SAP Sybase IQ
+Ienuldata  EMC  Calpont  IBM InfoSphere
+Aster Data  Greenplum  VectorWise  IIP Venica
+Oracle  IMB DB2  SQL Server  JustOne
+MySQL  Ingres  PostgreSQL
+
+NoSQL
+文档数据库
+CouchDB
+MongoDB
+Riak
+Couchbase
+键值
+数据库
+Redis
+Membrain
+Cassandra  BigTable
+Voldemort  Hypertable
+HBase
+列族数据库
+云数据库
+App Engine
+Datastore
+Cloudant
+SimpleDB
+图数据库
+InfiniteGraph
+Neo4j  OrientDB
+GraphDB
+
+NewSQL
+HandlerSocket  Akiban
+Amazon RDS  MySQL Cluster
+SQL Azure  Clustrix
+Database.com  Drizzle
+Xeround  FathomDB
+GenieDB
+Schooner MySQL  CodeFutures
+Tokutek  ScaleBase  NimbusDB
+Continuent  VoltDB
+TransLuftee
+
+知识点15：云数据库
+云数据库是部署和虚拟化在云计算环境中的数据库。
+云数据库是在云计算的大背景下发展起来的一种新兴的共享基础架构的方法，它极大地增强了数据库的存储能力，消除了人员、硬件、软件的重复配置，让软、硬件升级变得更加容易。云数据库具有高可扩展性、高可用性、采用多种形式和支持资源有效分发等特点。云数据库可以在私有云、公有云或混合云环境中构建、部署和访问。云数据库将用户从繁琐的数据库硬件定制中解放出来，同时让用户拥有强大的数据库扩展能力，满足海量数据的存储需求。
+知识点16：云数据库的特性
+（1）动态可扩展（2）高可用性（3）较低的使用代价（4）易用性（5）高性能（6）免维护（7）安全。
+
+知识点17：云数据库与其他数据库的关系
+从数据模型的角度来说，云数据库并非一种全新的数据库技术，而只是以服务的方式提供数据库功能云数据库并没有专属于自己的数据模型，云数据库所采用的数据模型可以是关系数据库所使用的关系模型，也可以是NoSQL数据库所使用的非关系模型。
+
+第四节 数据分析与数据挖掘
+知识点1：数据分析
+
+25
+CS 扫描全能王
+3亿人都在用的扫描App

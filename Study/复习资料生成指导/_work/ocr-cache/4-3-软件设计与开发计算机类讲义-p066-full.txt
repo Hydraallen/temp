@@ -1,0 +1,65 @@
+
+出于要有一种不允许违背结构程序设计精神的图形工具的考虑，Nassi 和 Shneiderman 提出了盒图，又称为 N-S 图。它有下述特点。
+(1) 功能域(即一个特定控制结构的作用域)明确，可以从盒图上一眼就看出来。
+(2) 不可能任意转移控制。
+(3) 很容易确定局部和全程数据的作用域。
+(4) 很容易表现嵌套关系，也可以表示模块的层次结构。
+基本符号(a) 顺序；(b) IF_THEN_ELSE 型分支；(c) CASE 型多分支；(d) 循环；(e) 调用子程序 A。
+
+(a)
+第一个任务
+第二个任务
+第三个任务
+
+(b)
+F 条件 T
+ELSE 部分 THEN 部分
+
+(c)
+CASE 条件
+值 1 值 2 … 值 n
+CASE 1 部分 CASE 2 部分 … CASE n 部分
+
+(d)
+循环条件
+DO-WHILE 部分
+DO-UNTIL 部分
+循环条件
+
+(e)
+A
+
+3. PAD 图
+PAD 是问题分析图(problem analysis diagram)的英文缩写，用二维树形结构的图来表示程序的控制流。
+基本符号:(a)顺序(先执行 P1 后执行 P2);(a)选择(IF C THEN P1 ELSE P2);(c)CASE 型多分支;(d)WHILE 型循环(WHILE C DO P);(c)UNTIL 型循环(REPEAT P UNTIL C)； (f)语句标号： (g)定义
+
+(a)
+P1
+P2
+
+(b)
+C
+P1
+P2
+
+(c)
+X=
+L1 P1
+L2 P2
+…
+Ln Pn
+
+(d)
+WHILE C P
+
+(e)
+UNTIL C P
+
+(f)
+
+(g)
+def
+
+61
+CS 扫描全能王
+3亿人都在用的扫描App

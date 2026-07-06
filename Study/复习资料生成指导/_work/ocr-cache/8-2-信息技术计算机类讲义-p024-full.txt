@@ -1,0 +1,40 @@
+
+大的文件块带来的好处如下：
+① 减少Client和Master的交互次数，因为读/写同一个块只需要一次交互，这样在GFS中假设的顺序读/写负载的场景下特别有用。
+② 同样也减少了Client和ChunkServer的交互次数,降低了TCP/IP连接等网络开销
+③ 减少了元数据的规模，因此Master可以将元数据完全放在内存中，这对于集中式元数据模型的GFS尤为重要。
+（3）系统存储大量(百万)大文件(100MB 以上),可以存储小文件但是没有优化.
+（4）系统支持两种类型读操作：大量的顺序读取以及小规模的随机读取.
+（5）绝大部分的大数据都是采用在文件尾部追加数据的方式，而不是覆盖数据。对大文件的随机写人基本上是不存在的（虽然支持小规模的随机写，但是不保证效率。）。
+（6）系统更看重平均响应时间，而不是单次的。
+GFS采用主/从模式，一个GFS服务器。当然，这里的一个Master是指逻辑上的一个，物理上可以有多个(就是可能有两台，一台用于备用,另一台用于正常的数据管理)。另外，用户可以把Client以及Chunk服务器放在同一台机器上。GFS的系统架构如图所示。
+
+Application
+GFS client
+(file name, chunk index)
+GFS master
+File namespace
+/foo/bar
+chunk 2cf0
+(chunk handle,
+chunk locations)
+Instructions to chunkserver
+Chunkserver state
+GFS chunkserver
+Linux file system
+GFS chunkserver
+Linux file system
+Legend:
+Data messages
+Control messages
+chunk data
+......
+
+Master（主服务器）作为管理节点，保存系统的元数据，负责整个文件系统的管理Chunk 服务器作为数据块服务器，主要负责具体的存储工作，数据以文件的形式存储在Chunk服务器上。
+Master管理着所有文件的元数据（metadata），存储了三种类型的metadata：文件的名字空间和块的名字空间，从文件到块的映射，块的副本的位置。所有的metadata都放在内存中。前两种类型的metadata通过操作日志存储在master的本地磁盘并在几个远程机器上留有副本。使用日志使得我们可以很简单地、可靠地更新master的状态，即使在master崩溃的情况下也不会有不一致的问题。相反，master在每次启动以及当有chunkserver加入的时候询问每个chunkserver的所拥有的块的情况。
+Master节点使用心跳信息周期性地和每个Chunk 服务器通信，发送指令到各个Chunk 服务器并接收Chunk 服务器的状态信息。单一节点(逻辑上)的Master 可以通过全局信息精确定位到每个block在哪个Chunk 服务器从而进行复制决策（每个block有3个副本）。Master的元数据都是存储在内存当中的，这样处理速度比较快，但也导致了存储的数据是有限制的弊端。
+Client对数据的读/写不是在Master上，而是通过Master获取block在Chunk上的位置信息，直接和Chunk服务器进行数据的交互读/写。
+Chunk是真正用于存储数据的机器，用来存储的文件块大小为64MB，这个大小远远大于一般文件系统的block的大小。每个block的副本都以普通Linux文件的形式保存在Chunk服务器上。Master服务器并不是持久化地保存Chunk服务器与block副本的信息。Master服务器只是在启动的时候轮询Chunk服务器以获取这些信息。Master服务器能够保证它持有的信息始终是最新的，因为它控制了所有的block位
+22
+CS 扫描全能王
+3亿人都在用的扫描App

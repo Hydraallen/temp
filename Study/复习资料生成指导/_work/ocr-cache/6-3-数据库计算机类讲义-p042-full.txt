@@ -1,0 +1,51 @@
+
+天行电力培训
+A.一个表        B.多个表
+C.多个视图      D.一个视图
+4.（ ）不属于比较运算符。
+A.=
+B.AND
+C.!=
+D.IN
+5.查询员工工资信息时，结果按工资降序排列，不正确的是（ ）。
+A.ORDER BY 工资
+B.ORDER BY 工资 DESC
+C.ORDER BY 工资 ASC
+D.ORDER BY 工资 DICTINCT
+6.执行查询 LIKE '_A%'，可能在查询结果中的是（ ）。
+A.ABCDE
+B.BACDE
+C.BAABB
+D.CCADE
+7.SELECT STUDENT.NAME, ENROLLMENT.CLASSNAME FROM STUDENT LEFT JOIN ENROLLMENT ON STUDENT.SID = ENROLLMENT.SID；下面描述错误的是（ ）。
+A.来自 Student 表的字段可能出现空值，来自 Enrollment 表的字段不会出现空值
+B.来自 Student 表的字段不会出现空值，来自 Enrollment 表的字段不会出现空值
+C.来自 Student 表的字段不会出现空值，来自 Enrollment 表的字段可能出现空值
+D.来自两个表的字段都可能出空值
+8.用 UNION 合并两个 SELECT 查询的结果时，正确的叙述是（ ）。
+A.查询结果是两个查询中的公共值
+B.两个 SELECT 语句必须输出同样的列数
+C.两个表各相应列的数据类型必须相同
+D.将来自不同查询的数据组合起来
+9.学生成绩表 GRADE 中有字段 SCORE（FLOAT），把所有在 55 分至 60 之间的分数提高 5 分，以下 SQL 语句正确的是（ ）。
+A.UPDATE GRADE SET SCORE=SCORE+5
+B.UPDATE GRADE SET SCORE=SCORE+5 WHERE SCORE>=55 OR SCORE<=60
+C.UPDATE GRADE SET SCORE=SCORE+5 WHERE SCORE BETWEEN 55 AND 60
+D.UPDATE GRADE SET SCORE=SCORE+5 WHERE SCORE>=55 AND SCORE<=60
+10.下面关于视图的说法正确的是（ ）。
+A.视图是由若干表组成的，独立存储在数据库中
+B.视图的存在提高了并发程度
+C.视图与基本表的最大区别在于它是逻辑定义的虚表
+D.视图简化了用户数据查看方式，但不提高查询效率
+三、判断题（A.正确 B.错误）
+1.SQL 语句不能够嵌入到高级语言程序中。（ ）
+2.SQL 的数据定义功能包括对数据的增、删、改、查。（ ）
+3.索引能够加速数据库查询，因此多建立几个索引有利于提高查询效率。（ ）
+4.对一个表做 SELECT 操作后，新表的元组个数小于或等于原表的元组个数。（ ）
+5.一个表可以与自己进行连接查询。（ ）
+6.所谓相关子查询就是子查询的查询条件不依赖于父查询。（ ）
+7.SQL 的集合操作主要包括：选择、投影、连接、并、交、差。
+8.两表间的关系删除的同时，这两个表也被自动删除。（ ）
+9.DBMS 对视图进行查询时首先进行有效性检查，检查被查询的表、视图等是否存在。（ ）
+10.视图是一个虚拟表，并不表示任何物理数据，而只是用来查看数据的窗口而已。（ ）
+40

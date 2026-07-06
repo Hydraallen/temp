@@ -1,0 +1,49 @@
+
+天行电力培训
+第四章 专项练习
+一、单选题
+1.DBMS提供DML实现对数据的操作，嵌入高级语言中使用的DML称为（ ）。
+A.自主型  B.自含型
+C.宿主型  D.交互型
+2.SQL语句INSERT、DELETE、UPDATE实现了（ ）功能。
+A.数据查询  B.数据操控
+C.数据定义  D.数据控制
+3.名为C的表，需要添加一个名为D的新列，应该使用（ ）语句。
+A.MODIFY TABLE C MODIFY (D INTEGER)
+B.ALTER TABLE C ADD (D INTEGER)
+C.MODIFY TABLE C ADD (D INTEGER)
+D.ALTER TABLE C MODIFY (D INTEGER)
+4.SQL语句创建表SC：
+CREATE TABLE SC
+(S# CHAR (6) NOT NULL,
+C# CHAR (3) NOT NULL,
+SCORE INTEGER,
+NOTE CHAR (20));
+向SC表插入如下行时，（ ）可以被插入。
+A.(201009','101',60,必修)  B.(200823','101',NULL,NULL)
+C.(NULL,'103',80,选修，)  D.(20032',NULL,86,')
+5.根据（ ）定义分配给列中的值的存储空间量。
+A.数据类型  B.字体
+C.数据结构  D.ASCII码
+6.学生表中的“学号”由9位数字组成，使用（ ）数据类型更合适。
+A.INT  B.CHAR
+C.DATE  D.SMALLINT
+7.SELECT语句执行的结果是（ ）。
+A.数据项  B.元组
+C.表  D.数据库
+8.设关系R(A,B,C)，与SQL语句“SELECT A FROM R WHERE C='男'”等价的关系代数表达式是（ ）。
+A.Π_A(σ_{C='男'}(R))  B.σ_{C='男'}(Π_A(R))
+C.σ_{C='男'}(Π_{A,C}(R))  D.Π_A(σ_{C='男'}(R))
+9.SELECT的条件“年龄 BETWEEN 20 AND 25”，表示年龄在20至25之间，且（ ）。
+A.包括20岁和25岁  B.不包括20岁和25岁
+C.包括20岁但不包括25岁  D.包括25岁但不包括20岁
+10.SELECT语句中，若希望查询的结果不出现重复元组，则应使用（ ）保留字。
+A.DISTINCT  B.ALL
+C.LIKE  D.TOP
+11.下面是聚合函数的选项是（ ）。
+A.DISTINCT  B.SUM
+C.IF  D.TOP
+12.在SELECT语句中使用ORDER BY子句排序，（ ）选项表示升序。
+37
+CS 扫描全能王
+3亿人都在用的扫描App

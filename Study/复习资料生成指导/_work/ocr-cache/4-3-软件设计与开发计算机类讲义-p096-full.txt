@@ -1,0 +1,33 @@
+
+TYPE i IS INTEGER;
+1:    i=1;
+      total.input=total.valid=0;
+      sum=0;
+2:    DO WHILE value[i] <> -999
+3:      AND total.input<100
+4:      increment total.input by1;
+5:      IF value[i]>=minimum
+6:        AND value[i]<=maximum
+7:        THEN increment total.valid by 1;
+              sum=sum+value[i];
+8:      ENDIF
+      increment i by 1;
+9:    ENDDO
+10:   IF total.valid>0
+11:     THEN average=sum/total.valid;
+12:     ELSE average=-999;
+13:   ENDIF
+END average
+
+② 计算流图的环形复杂度。
+环形复杂度定量度量程序的逻辑复杂性。经计算，流图的环形复杂度为6。
+③ 确定线性独立路径的基本集合。
+独立路径是指至少引入程序的一个新处理语句集合或一个新条件的路径，即独立路径至少包含一条在定义该路径之前不曾用过的边。
+程序的环形复杂度决定了程序中独立路径的数量，而且这个数是确保程序中所有语句至少被执行一次所需的测试数量的上界。
+上述程序的环形复杂度为6，因此共有6条独立路径。
+路径1：1-2-10-11-13      路径2：1-2-10-12-13
+
+91
+
+CS 扫描全能王
+3亿人都在用的扫描App

@@ -1,0 +1,25 @@
+
+置的分配，而且通过周期性地心跳信息监控Chunk服务器的状态。
+知识点12：HDFS（Hadoop Distributed File System）
+HDFS 是 Hadoop 的核心子项目，是分布式计算中数据存储管理的基础，是基于流数据模式访问和处理超大文件的需求开发的，它可以运行于廉价的商用服务器上。它所具有的高容错、高可靠性、高可扩展性、高获得性、高吞吐率等特征为海量数据提供了不怕故障的存储，为超大数据集的应用处理带来了很多便利。
+（1）数据块
+大文件会被分割成多个 block 进行存储。每一个 block 会在多个 Datanode 上存储多份副本，默认是 3 份。和 GFS 一样，HDFS 默认最基本的存储单位是 64MB 的数据块（2.X 版本改为 128MB），这个数据块可以理解为和一般文件里面的分块是一样的。
+（2）元数据节点和数据节点
+元数据节点（Namenode）来管理文件系统的命名空间，它将所有文件和文件夹的元数据保存在一个文件系统树中，并且管理文件目录、文件和 block 的对应关系，以及 block 和 Datanode 的对应关系。这些信息在本地文件系统中以两种形式永久保存：fsimage（整个文件系统的快照）和 eidtlogs（文件系统的改动日志）。Namenode 也保存着构成给定文件的 block 的位置，但这些信息并不是永久地保存在磁盘中，因为这些信息是在系统启动时根据 Datanode 的反馈信息重建，并且是定时基于 Datanode 的报告更新的，具有很强的动态性。
+数据节点（Datanode）是用来存储数据文件的。大部分容错机制都是在 Datanode 上实现的。Client 或者 Namenode 可以向 Datanode 请求写入或者读出数据块并且周期性地向 Namenode 汇报其存储的数据块信息。
+从元数据节点（Secondary Namenode）不是元数据节点的备用节点，它的主要功能是周期性地将元数据节点的命名空间镜像文件和修改日志合并，以防日志文件过大，减少 NameNode 的启动时间。合并过后的命名空间镜像文件也在从元数据节点保存了一份，以在元数据节点失败的时候可以恢复。在 Hadoop2.0 中为了提高可用性，配置了备用节点 StandByNameNode，SecondaryNameNode 的角色被 StandByNameNode 所包含。
+（3）系统架构
+HDFS 采用主/从模式，包括一个 Namenode（HDFS2.0 引入了多个 Namenode）和多个 DataNode，客户端通过与 Namenode 和 Datanodes 的交互访问文件系统。客户端通过 Namenode 获取文件的元数据，而真正的文件 I/O 操作是直接和 Datanode 进行交互的。
+HDFS Architecture
+Metadata (Name, replicas, ...): /home/foo/data, 3, ...
+Metadata.ops  Namenode  Metadata (Name, replicas, ...): /home/foo/data, 3, ...
+Client  Read Datanodes  Block ops  Datanodes
+Rack 1  Replication  Rack 2
+Write  Client
+Blocks
+4.HDFS 的优缺点
+优点：
+（1）处理超大文件
+23
+CS 扫描全能王
+3亿人都在用的扫描App

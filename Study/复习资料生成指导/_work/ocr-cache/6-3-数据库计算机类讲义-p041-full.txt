@@ -1,0 +1,49 @@
+
+天行电力培训
+C.选取单表中字段子集的查询语句 D.嵌入到另一个查询语句之中的查询语句
+23.在学生表 STUDENT 的系别（SDEPT）属性中查询信息系（IS）、数学系（MA）和计算机系（CS）的
+学生姓名（SNAME）和性别（SSEX），正确的命令格式应为（）。
+A.SELECT STUDENT FROM SNAME, SSEX WHERE SDEPT IN ('IS','MA','CS')
+B.SELECT SNAME, SSEX FROM STUDENT WHERE SDEPT IN (IS,MA,CS)
+C.SELECT SNAME, SSEX FROM STUDENT WHERE SDEPT IN ('IS','MA','CS')
+D.SELECT SNAME, SSEX FROM STUDENT WHERE SDEPT LIKE IS, MA, CS
+24.下述 SQL 语句中更新表中数据作用的命令动词是（）。
+A.ALTER B.CREATE
+C.UPDATE D.INSERT
+25.表 S(SN,CN,GRADE)，SN 为学生名，CN 为课程名，均为字符型；GRADE 为成绩，数值型，取值范围
+是 0-100。选项（）是正确的插入语句。
+A.ADD INTO S VALUES('张三', '化学', 98)
+B.INSERT INTO S VALUES （'张三', '化学', '80')
+C.INSERT INTO S VALUES （'张三', '化学', 98）
+D.INSERT INTO S VALUES （'张三', '化学', 110）
+26.下列对 DELETE 权限的叙述中，正确的是（）。
+A.允许删除数据 B.允许删除关系
+C.允许删除数据库模式 D.与 DROP 权限等价
+27.关系 SC（SNO, CNAME, GRADE）,各属性的含义分别为学号、课程名、成绩。若要将所有学生的“数据
+库系统”课程的成绩改为 0，能正确完成该操作的 SQL 语句是（）。
+A.UPDATE SET SC GRADE = 0 WHERE CNAME='数据库系统'
+B.DELETE FROM SC WHERE CNAME='数据库系统'
+C.DELETE SC WHERE CNAME='数据库系统'
+D.UPDATE SC SET GRADE = 0 WHERE CNAME='数据库系统'
+28.删除数据库的方法是（）。
+A.使用 DROP DATABASE 语句 B.使用 DELETE TABLE 语句
+C.使用 ALTER DATABASE 语句 D.使用 DROP TABLE 语句
+29.要求视图的更新必须满足查询中的条件，则需要（）。
+A.WITH CHECK OPTION B.WITH UPDATE
+C.WITH DELETE D.WITH INSERT
+30.视图可用于（）。
+A.确保引用完整性
+B.保存存储在一个单独表中的数据的额外副本
+C.限制对表中特定行或列中的数据的访问
+D.在从基本表中删除历史数据前将其保存
+二、多选题
+1.下列的 SQL 语句中，（）不是数据定义语句。
+A.CREATE B.ROLLBACK
+C.DROP D.GRANT
+2.定义一个列至少需要（）。
+A.数据类型 B.索引
+C.键 D.名称
+3.查询数据可以来自（）。
+39
+[二维码] CS 扫描全能王
+3亿人都在用的扫描App

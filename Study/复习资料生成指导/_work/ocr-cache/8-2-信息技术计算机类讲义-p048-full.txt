@@ -1,0 +1,64 @@
+
+知识点5：神经元、MP模型
+神经科学家McCulloch和逻辑学家Pitts提出“McCulloch-Pitts neuron”模型
+impulses carried
+toward cell body
+dendrites
+branches
+of axon
+nucleus
+axon
+axon
+terminals
+cell body
+impulses carried
+away from cell body
+A cartoon drawing of a biological neuron (left) and its mathematical model (right).
+x0
+w0
+synapse
+w0x0
+dendrite
+cell body
+∑wixi + b
+output axon
+activation
+function
+w1x1
+w2x2
+
+知识点6：激活函数
+对输入信息进行非线性变换。
+名称 函数 图像 导数 值域
+Sigmoid f(x)=\frac{1}{1+e^{-x}} f’(x)=f(x)·(1−f(x)) (0,1)
+Tanh f(x)=\frac{1−e^{-2x}}{1+e^{-2x}} f’(x)=1−f(x)^2 (-1,1)
+ReLU f(x)=\begin{cases} 0, for x ≤ 0 \\ x, for x > 0 \end{cases} f(x)=\begin{cases} 0, for x ≤ 0 \\ 1, for x > 0 \end{cases} [0,+∞)
+
+知识点7：单层感知机
+x1
+w1
+x2
+w2
+∑
+f
+a
+wd
+xd
+权重
+激活函数
+
+知识点8：多层感知机
+输入层、输出层、至少一个隐藏层。
+Input hidden output
+x1 h1 o1
+x2 h2 o2
+x3 h3 o3
+h1
+h2
+h3
+
+知识点9：传统的浅层学习与深度学习
+
+46
+CS 扫描全能王
+3亿人都在用的扫描App

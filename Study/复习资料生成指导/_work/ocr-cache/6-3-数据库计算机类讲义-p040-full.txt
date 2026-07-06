@@ -1,0 +1,54 @@
+
+A.DESC
+B.ASC
+C.UP
+D.DOWN
+13.SELECT 语句中，WHERE 子句的条件表达式中，字符串匹配的操作符是（ ）。
+A.DISTINCT
+B.ALL
+C.LIKE
+D.TOP
+14.在 SELECT 查询语句中的 LIKE，“DB_”表示（ ）的字符串。
+A.长度为 3 的以“DB”开头
+B.长度为 2 的以“DB”开头
+C.任意长度的以“DB”开头
+D.长度为 3 的以“DB”开头第三个字符为“_”
+15.若想查询出所有姓张的、且出生日期为空的学生信息，则 WHERE 条件应为（ ）。
+A.姓名 LIKE '张%' AND 出生日期=NULL
+B.姓名 LIKE '张*' AND 出生日期=NULL
+C.姓名 LIKE '张%' AND 出生日期 IS NULL
+D.姓名 LIKE '张_' AND 出生日期 IS NULL
+16.候选人表 CANDIDATE，查询候选人所在城市(CITY)，合适的 SQL 是（ ）。
+A.SELECT CITY FROM CANDIDATE ORDER BY CITY
+B.SELECT CITY FROM CANDIDATE
+C.SELECT DISTINCT * FROM CANDIDATE
+D.SELECT DISTINCT CITY FROM CANDIDATE
+17.使用 SQL 语句进行分组检索时，为了去掉不满足条件的分组，应该（ ）。
+A.使用 WHERE 子句
+B.在 GROUP BY 后面使用 HAVING 子句
+C.先使用 WHERE 子句，再使用 HAVING 子句
+D.先使用 HAVING 子句，再使用 WHERE 子句
+18.学生 S(S#, SNAME, SEX, DEPARTMENT)；课程 C(C#, CNAME, TEACHER)；选课关系 SC(S#, C#, GRADE)，“查询选修了 3 门以上课程的学生的学号”的 SQL 语句是（ ）。
+A.SELECT S# FROM SC GROUP BY S# WHERE COUNT(*)>3
+B.SELECT S# FROM SC GROUP BY S# HAVING COUNT(*)>3
+C.SELECT S# FROM SC ORDER BY S# WHERE COUNT(*)>3
+D.SELECT S# FROM SC ORDER BY S# HAVING COUNT(*)>3
+19.关系 R(A, B, C)和 S(A, D, E, F)，有 R.A=S.A。若将关系代数表达式∏_{R.A,R.B,S.D,S.F}(R⋈S)用 SQL 语言的查询语句表示，则为：（ ）。
+A. SELECT R.A,R.B,S.D,S.F FROM R, S WHERE R.A=S.D
+B. SELECT R.A,R.B,S.D,S.F FROM R, S WHERE R.A=S.A
+C. SELECT R.A,R.B,S.D,S.F FROM R, S WHERE R.B=S.A
+D. SELECT R.A,R.B,S.D,S.F FROM R, S WHERE R.C=S.A
+20.学生 S(S#, SNAME, SEX, AGE)，课程 C(C#, CNAME, TEACHER)，选课 SC(S#, C#, GRADE)。查找某个学生的基本信息及其选课的平均成绩，将使用关系（ ）。
+A.S 和 SC
+B.SC 和 C
+C.S 和 C
+D.S、SC 和 C
+21.当表 R 和表 S 左外连接时，查询的结果集中能够包含（ ）。
+A.R 中的部分记录，S 中的全部记录
+B.R 中的全部记录，S 中的全部记录
+C.R 中的全部记录，S 中的部分记录
+D.R 中的部分记录，S 中的部分记录
+22.在 SQL 语言中，子查询是（ ）。
+A.返回单表中数据子集的查询语言
+B.选取多表中字段子集的查询语句
+38

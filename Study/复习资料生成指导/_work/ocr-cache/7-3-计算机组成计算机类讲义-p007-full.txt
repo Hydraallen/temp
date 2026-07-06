@@ -1,0 +1,25 @@
+
+天行电力培训
+
+知识点2 描述计算运算速度的指标
+
+MIPS (Million Instructions Per Second)：它表示每秒百万条指令数。
+
+MFLOPS (Million Floating Point Operations Per Second)：每秒百万次浮点操作次数。
+
+CPI (Cycle Per Instruction)：表示每条指令周期数，即执行一条指令所需的平均时钟周期数。
+
+吞吐量：一台计算机在某一时间间隔内能够处理的信息量。
+
+响应时间：从输入有效到系统产生响应之间间隔的时间。
+
+主频/时钟周期：CPU的工作节拍受一个主时钟的控制，主时钟的频率叫做CPU的主频；主频的倒数叫做CPU的时钟周期。
+
+CPU执行时间：表示CPU执行程序所占用的CPU时间。
+
+注意：各个指标都不能完全表征出一台计算机的性能。
+
+5
+
+CS 扫描全能王
+3亿人都在用的扫描App

@@ -1,0 +1,52 @@
+
+天行电力培训
+
+按易位单位的不同，又可分成比特易位和字符易位两种。前者的实现方法简单易行，并可用硬件实现，主要用于数字通信中；而字符易位法是利用密钥对明文进行易位后形成密文，具体方法是：假定有一密钥MEGABUCK,其长度为8,则其明文是以8个字符为一组写在密钥的下面，如图所示。按密钥中字母在英文字母表中的顺序来确定明文排列后的列号。如密钥中的A所对应的列号为1,B为2,C为3,E为4等。然后再按照密钥所指示的列号，先读出第一列中的字符，读完第1列后，再读出第2列中的字符，……，这样，即完成了将明文pleaestransfer…转换为密文AFLLSKSOSELAWAIA…的加密过程。
+
+M E G A B U C K 原文：
+7 4 5 1 2 8 3 6 
+p l e a s e t r Please transfer one million
+a n s f e r o n account six two two a b c d
+c m i l l i o n 
+d o l l a r s t 
+o m y s w i s s 
+b a n k a c c o TOOSSCTC LNMOMANT
+u n t s i x t w ESILYNTW RNNTSOWD
+o t w o a b c d FAEDOBNO.
+
+按字符易位加密算法
+
+（2）置换法
+
+置换法是按照一定的规则，用一不字符去置换(替代)另一个字符来形成密文。因为古罗马执政官尤里乌斯·凯撒(Julius caeser)曾将这种方法用于军队通信而又被称为凯撒密码（caeser cipher）。恺撒密码的替换方法是通过排列明文和密文字母表，密文字母表示通过将明文字母表向左或向右移动一个固定数目的位置。例如，当偏移量是左移3的时候（解密时的密钥就是3）：
+
+明文字母表：ABCDEFGHIJKLMNOPQRSTUVWXYZ；
+
+密文字母表：DEFGHIJKLMNOPQRSTUVWXYZABC。
+
+使用时，加密者查找明文字母表中需要加密的消息中的每一个字母所在位置，并且写下密文字母表中对应的字母。需要解密的人则根据事先已知的密钥反过来操作，得到原来的明文。例如：
+
+明文：THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG ；
+
+密文：WKH TXLFN EURZQ IRA MXPSV RYHU WKH ODCB GRJ。
+
+恺撒密码的加密、解密方法还能够通过同余的数学方法进行计算。首先将字母用数字代替，A=0,B=1,…,Z=25。此时偏移量为n的加密方法即为：
+
+\[ E_n(x) = (x + n)\%26 \]
+
+解密就是：
+
+\[ D_n(x) = (x - n)\%26 \]
+
+单纯移动K位的置换算法很容易被破译Z比较好的置换算法是进行映像。
+
+3. 对称加密算法和非对称加密算法
+
+（1）对称加密算法
+
+在对称加密算法中，在加密算法和解密算法之间存在着一定的相依关系，即加密和解密算法往往使用
+
+141
+
+CS 扫描全能王
+3亿人都在用的扫描App

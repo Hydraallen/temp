@@ -1,0 +1,48 @@
+
+天行电力培训
+
+的地址则为DHCP Relay配置的DHCP Server的IP地址。同时修改DHCP报文中，giaddress为
+VlanIf的IP地址。并以单播将DHCP Discovery发送到DHCP Server端。
+
+DHCP Server提供阶段：
+DHCP Server提供阶段，即为DHCP Server响应DHCP Discovery所发的DHCP Offer阶段
+DHCP Server收到DHCP Discovery报文后，解析该报文请求IP地址所属的Subnet。并从
+dhcpd.conf文件中与之匹配的subnet中取出一个可用的IP地址（从可用地址段选择一个IP地
+址后，首先发送ICMP报文来ping该IP地址，如果收到该IP地址的ICMP报文，则抛弃该IP
+地址，重新选择IP 地址继续进行ICMP报文测试，直到找到一个网络中没有人使用的IP地址，
+以达到防活动态分配的IP 地址与网络中其他设备IP地址冲突，这个IP地址冲突检测机制，
+可配臵），设置在DHCP Discovery报文中yiaddress字段中，表示为该客户端分配的IP地址，
+并且为该Lease设置该Subnet配置Option，例如默认leases租期，最大租期，router等信息。
+
+DHCP从地址池中选择IP地址，以如下优先级进行选择：
+1、当前已经存在的Ip Mac的对应关系
+2、Client以前的IP地址
+3、读取Discovery报文中的Requested Ip Address Option的值，如果存在并且IP地址可用
+4、从配置的Subnet中选择IP地址：
+
+DHCP Server解析DHCP Discovery请求的IP所属的Subnet，首先看该DHCP Discovery报
+文中giaddress是否有DHCP Relay，如果有，则从giaddress所述的subnet中可用IP地址段中获
+取，并分配IP。如果giaddress没有IP地址，则从该DHCP Server绑定的接口的IP地址所属的
+网段分配IP地址。
+
+■ DHCP Client选择阶段：
+DHCP Client收到若干个DHCP Server响应的DHCP Offer报文后，选择其中一个DHCP
+Server作为目标DHCP Server。选择策略通常为选择第一个响应的DHCP Offer报文所属的DHCP
+Server。然后以广播方式回答一个DHCP Request报文，该报文中包含向目标DHCP请求的IP
+地址等信息。之所以是以广播方式发出的，是为了通知其他DHCP Server自己将选择该DHCP
+Server所提供的IP地址。
+
+■ DHCP Server确认阶段：
+当DHCP Server收到DHCP Client发送的DHCP Request后，确认要为该DHCP Client提供
+的IP地址后，便想该DHCP Client响应一个包含该IP地址以及其他Option的报文，来告诉DHCP
+Client可以使用该IP地址了。然后DHCP Client即可以将该IP地址与网卡绑定。另外其他DHCP
+Server都将收回自己之前为DHCP Client提供的IP地址。
+
+■ DHCP Client重新登录网络：
+当DHCP Client重新登录后，发送一个以包含之前DHCP Server分配的IP地址信息的DHCP
+Request报文，当DHCP Server收到该请求后，会尝试让DHCP客户端继续使用该IP地址。并
+
+118
+
+CS 扫描全能王
+3亿人都在用的扫描App

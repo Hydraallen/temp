@@ -32,6 +32,7 @@ import fitz  # PyMuPDF
 WORK_DIR = Path(
     "/Users/hydraallen/Desktop/Study/工作/找工/国家电网/天行/课本/temp/Study"
 )
+LECTURE_DIR = WORK_DIR / "讲义"  # 讲义源 PDF 目录
 GUIDE_DIR = WORK_DIR / "复习资料生成指导"
 MAIN_GUIDE = GUIDE_DIR / "00-主指导文档.md"
 RENDER_DIR = Path("/private/tmp/cheatsheet-render")
@@ -403,7 +404,7 @@ def run_chapter(
 ) -> ChapterResult:
     api_key = load_api_key()
     guide_text = MAIN_GUIDE.read_text(encoding="utf-8")
-    pdf_path = WORK_DIR / pdf
+    pdf_path = LECTURE_DIR / pdf
     out_p = WORK_DIR / out_path
     out_p.parent.mkdir(parents=True, exist_ok=True)
     ocr_p = Path(ocr_dump) if ocr_dump else (GUIDE_DIR / "_work" / "ocr-dump.md")
@@ -646,7 +647,7 @@ def run_chapter_full(
     """整章模式：渲染 [start,end] 全部页 → 整章 full OCR → 写稿模型自行区分知识点/练习。
 
     answer_key：计网重生模式下传入书末统一答案全文，用于给第五节考点信号标注正确结论。"""
-    pdf_path = WORK_DIR / ch.pdf
+    pdf_path = LECTURE_DIR / ch.pdf
     out_p = WORK_DIR / ch.out_path
     out_p.parent.mkdir(parents=True, exist_ok=True)
     pdf_id = Path(ch.pdf).stem

@@ -26,6 +26,26 @@ from typing import Callable
 
 import fitz  # PyMuPDF
 
+# 自检 / react 自愈（叶子模块位于 src/ 子包，顶层入口走绝对导入）
+from src.cheatsheet_checker import (
+    CheckResult,
+    check_cheatsheet,
+    check_skill_structure,
+    format_score_line,
+    format_skill_line,
+)
+# skill 方法论 prompt 模板 + source-marker 工具
+from src.skill_prompts import (
+    build_writer_prompt_skill,
+    convert_source_markers_to_italic,
+    strip_source_markers,
+)
+# 考试信号挖掘（skill Step 3）：学科级 exam-signals.md 的缓存与挖掘
+from src.exam_miner import (
+    ensure_exam_signals,
+    get_subject_out_dir,
+)
+
 # ---------------------------------------------------------------------------
 # 常量 / 路径
 # ---------------------------------------------------------------------------
@@ -262,6 +282,14 @@ _CONTINUE_INSTRUCTION = (
 # 单章最多续写轮数，防极端情况下无限循环。
 _MAX_CONTINUATIONS = 6
 
+# ---------------------------------------------------------------------------
+# React 自愈：首次生成后若自检不过，最多再做 MAX_REPAIR_ROUNDS 次「全章重生成」。
+# 语义：总调用 write_cheatsheet 次数 ≤ 1 + MAX_REPAIR_ROUNDS（即首稿 + 至多 3 次重试）。
+# 每轮跑自检，最终保留「通过维度数最多 → 字符数最多」的最优稿落盘，避免越改越差。
+# 注意：此重生成独立于 write_cheatsheet 内部的截断续写（那是单次调用内的拼接）。
+# ---------------------------------------------------------------------------
+MAX_REPAIR_ROUNDS = 3
+
 
 def _call_text_openai(
     messages: list[dict], api_key: str, max_tokens: int
@@ -374,6 +402,13 @@ class ChapterResult:
     char_count: int
     elapsed: float
     tokens: dict
+    # React 自愈元数据（None 表示该次未跑自检，例如 write-only 原型分支）
+    check_result: CheckResult | None = None
+    repair_rounds: int = 0  # react 实际重生成次数（0 = 首稿即通过）
+    final_verdict: str = "PASS"  # "PASS" / "FAIL-CHECK" / "UNCHECKED"
+    # skill 模式（双输出）额外字段；非 skill 模式均为 None
+    expanded_path: Path | None = None  # `*-expanded.md` 路径
+    skill_check: dict | None = None     # check_skill_structure 的返回（诊断用）
 
 
 def parse_ocr_dump(ocr_p: Path) -> tuple[str, str]:
@@ -641,12 +676,151 @@ def _ts() -> str:
     return time.strftime("%Y-%m-%d %H:%M:%S")
 
 
+def _format_check_log_line(ch: Chapter, result: ChapterResult) -> str:
+    """生成一行 CHECK 进度日志：轮数 + 最终判定 + 各维分数（+ skill 维，若有）。"""
+    cr = result.check_result
+    if cr is None:
+        verdict = "UNCHECKED"
+        score_line = "-"
+    else:
+        verdict = result.final_verdict
+        score_line = format_score_line(cr)
+    line = (
+        f"| {ch.subject} | 第{ch.idx}章 {ch.title} | CHECK | "
+        f"react={result.repair_rounds}/{MAX_REPAIR_ROUNDS} | {verdict} | "
+        f"{score_line} | {_ts()} |"
+    )
+    if result.skill_check is not None:
+        line += "\n" + (
+            f"| {ch.subject} | 第{ch.idx}章 {ch.title} | SKILL  | - | - | "
+            f"{format_skill_line(result.skill_check)} | {_ts()} |"
+        )
+    return line
+
+
+def _write_and_repair(
+    base_prompt: str,
+    api_key: str,
+    out_p: Path,
+    ch: Chapter,
+    ocr_text: str,
+    grand: dict,
+) -> tuple[str, CheckResult, int, str]:
+    """React 自愈写稿：反复 write_cheatsheet + check_cheatsheet，保留最优稿落盘。
+
+    返回 (最终落盘正文, 自检结果, react 实际重生成次数, 最终判定)。
+    token 累计进 grand。
+    """
+    t0 = time.time()
+    # 首稿
+    md, u, endpoint = write_cheatsheet(base_prompt, api_key)
+    for k in grand:
+        grand[k] += int(u.get(k, 0) or 0)
+    result = check_cheatsheet(md, ch, ocr_text)
+    print(
+        f"    [首稿] {format_score_line(result)}  端点={endpoint}  "
+        f"{len(md)} 字  {time.time() - t0:.1f}s"
+    )
+    drafts: list[tuple[str, CheckResult]] = [(md, result)]
+
+    repair = 0
+    while not result.passed and repair < MAX_REPAIR_ROUNDS:
+        repair += 1
+        feedback = (
+            "\n\n======== 【上一稿自检指出的问题】（请针对性修正，勿丢失任何知识点）========\n"
+            + "\n".join(f"- {f}" for f in result.failures)
+            + "\n======== 上一稿问题结束 ========"
+        )
+        t1 = time.time()
+        md2, u2, endpoint2 = write_cheatsheet(base_prompt + feedback, api_key)
+        for k in grand:
+            grand[k] += int(u2.get(k, 0) or 0)
+        result2 = check_cheatsheet(md2, ch, ocr_text)
+        print(
+            f"    [重生 {repair}/{MAX_REPAIR_ROUNDS}] {format_score_line(result2)}  "
+            f"端点={endpoint2}  {len(md2)} 字  {time.time() - t1:.1f}s"
+        )
+        drafts.append((md2, result2))
+        result = result2  # 继续循环判定；未过则下一轮
+
+    # 保留「通过维度数最多 → 字符数最多」的最优稿
+    best_md, best_result = max(drafts, key=lambda d: d[1].score_tuple())
+    out_p.write_text(best_md, encoding="utf-8")
+    verdict = "PASS" if best_result.passed else "FAIL-CHECK"
+    if best_result is not drafts[-1][1]:
+        print(
+            f"    [react] 共 {len(drafts)} 稿，回退保留得分更高的早稿："
+            f"{format_score_line(best_result)}"
+        )
+    print(
+        f"    [react 结束] {len(drafts)} 稿 / 重生 {repair} 次 → 判定 {verdict}  "
+        f"{format_score_line(best_result)}  {len(best_md)} 字  写入 {out_p}"
+    )
+    return best_md, best_result, repair, verdict
+
+
+def _write_and_repair_skill(
+    base_prompt: str,
+    api_key: str,
+    out_p: Path,
+    ch: Chapter,
+    ocr_text: str,
+    grand: dict,
+    exam_signals_present: bool,
+) -> tuple[str, str, CheckResult, int, str, dict]:
+    """skill 模式 React 自愈写稿（双输出版，迁移自 cheatsheet-creator skill Step 4）。
+
+    流程：
+      1. 复用 _write_and_repair：react 自愈出 **expanded 版**（带 `<!-- src: ... -->`
+         出处标记），落盘到 `out_p.with_name(out_p.stem + "-expanded.md")`；
+         自检仍跑四维（structure/coverage/latex/length），以 expanded 文本为对象。
+      2. 由 expanded 派生 **concise 版**：strip_source_markers 剥离去所有 source
+         marker，落盘到 out_p（主交付文件 *.md）。
+      3. 在 concise 版上额外跑 check_skill_structure（可选第 5 维，仅诊断；不计入
+         react 自愈主判定，避免改动 _write_and_repair 内部循环）。
+
+    返回 (concise_md, expanded_md, 四维自检结果, react 重生次数, 主判定, skill 维 dict)。
+    token 累计进 grand。
+    """
+    expanded_path = out_p.with_name(out_p.stem + "-expanded.md")
+    expanded_md, check_res, repair_rounds, verdict = _write_and_repair(
+        base_prompt, api_key, expanded_path, ch, ocr_text, grand
+    )
+    # expanded → concise（剥离 source marker）；同时把 expanded 渲染成斜体引用版本
+    concise_md = strip_source_markers(expanded_md)
+    expanded_rendered = convert_source_markers_to_italic(expanded_md)
+    # 把渲染后的 expanded 版（斜体引用）回写到 *-expanded.md，覆盖带 HTML 注释的版本
+    expanded_path.write_text(expanded_rendered, encoding="utf-8")
+    out_p.write_text(concise_md, encoding="utf-8")
+    skill_ok, skill_detail = check_skill_structure(concise_md, exam_signals_present)
+    print(
+        f"    [skill] concise {len(concise_md)} 字 → {out_p};  "
+        f"expanded {len(expanded_rendered)} 字 → {expanded_path};  "
+        f"{format_skill_line(skill_detail)}"
+    )
+    return concise_md, expanded_rendered, check_res, repair_rounds, verdict, skill_detail
+
+
 def run_chapter_full(
-    ch: Chapter, api_key: str, guide_text: str, answer_key: str = ""
+    ch: Chapter,
+    api_key: str,
+    guide_text: str,
+    answer_key: str = "",
+    use_skill: bool = False,
 ) -> ChapterResult:
     """整章模式：渲染 [start,end] 全部页 → 整章 full OCR → 写稿模型自行区分知识点/练习。
 
-    answer_key：计网重生模式下传入书末统一答案全文，用于给第五节考点信号标注正确结论。"""
+    answer_key：计网重生模式下传入书末统一答案全文，用于给第五节考点信号标注正确结论。
+
+    use_skill：True 时启用 cheatsheet-creator skill 方法论分支（迁移自 skill Step 1+3+4）：
+      - 写稿前确保所属学科的 exam-signals.md 已挖好（学科级缓存命中即 skip）；
+      - 写稿 prompt 改用 skill 模板（topic 分组 + bold headwords + Caveat callout
+        + 末尾 Worked Examples 区块 + source-marker），并把 exam-signals 作为
+        「重点权重」注入；
+      - 产出双文件：`*.md`（concise 主交付）+ `*-expanded.md`（斜体出处引用）；
+      - 额外跑 check_skill_structure（可选第 5 维，仅诊断）。
+    False 时走原四维流程，行为不变（向后兼容）。
+    """
     pdf_path = LECTURE_DIR / ch.pdf
     out_p = WORK_DIR / ch.out_path
     out_p.parent.mkdir(parents=True, exist_ok=True)
@@ -675,8 +849,12 @@ def run_chapter_full(
     ocr_p.write_text(ocr_full, encoding="utf-8")
     print(f"    OCR 完成 {time.time() - t0:.1f}s，全文 {len(ocr_full)} 字，存 {ocr_p}")
 
-    # Step 3: 写稿
-    print(f"[3/3] 写稿 （{TEXT_MODEL}）...")
+    # Step 3: 写稿 + react 自愈
+    print(
+        f"[3/3] 写稿 （{TEXT_MODEL}）+ react 自检"
+        f"（首稿 + 至多 {MAX_REPAIR_ROUNDS} 次重生成）..."
+        + ("  [skill 模式]" if use_skill else "")
+    )
     t0 = time.time()
     answer_note = ""
     if ch.subject == "计算机网络":
@@ -690,19 +868,63 @@ def run_chapter_full(
                 "注意：本册答案统一在全书末尾（不在本章范围内）。若本章 OCR 内没有答案文本，"
                 "就仅用课后习题作为考点信号，不要回溯末尾答案，也不要编造答案结论。\n"
             )
+
+    if use_skill:
+        # --- skill 方法论分支（迁移自 cheatsheet-creator skill Step 1+3+4）---
+        # 写稿前确保所属学科的 exam-signals 已挖好（学科级缓存命中即 skip）
+        subject_out_dir = get_subject_out_dir(ch.subject, CHAPTERS)
+        exam_signals = ensure_exam_signals(ch.subject, api_key, subject_out_dir)
+        prompt = build_writer_prompt_skill(
+            ch.subject, ch.title, ch.pdf, ch.pages, ocr_text, guide_text,
+            exam_signals=exam_signals, answer_note=answer_note, answer_key=answer_key,
+        )
+        cheatsheet, _expanded, check_res, repair_rounds, verdict, skill_res = (
+            _write_and_repair_skill(
+                prompt, api_key, out_p, ch, ocr_text, grand,
+                exam_signals_present=bool(exam_signals.strip()),
+            )
+        )
+        print(
+            f"    写稿+react+skill 完成 {time.time() - t0:.1f}s，"
+            f"in={grand.get('prompt_tokens', '?')} out={grand.get('completion_tokens', '?')}，"
+            f"concise {len(cheatsheet)} 字 → {out_p}；"
+            f"expanded → {out_p.with_name(out_p.stem + '-expanded.md')}"
+        )
+        return ChapterResult(
+            out_p,
+            ocr_p,
+            len(cheatsheet),
+            time.time() - t_start,
+            grand,
+            check_result=check_res,
+            repair_rounds=repair_rounds,
+            final_verdict=verdict,
+            expanded_path=out_p.with_name(out_p.stem + "-expanded.md"),
+            skill_check=skill_res,
+        )
+
+    # --- 原型分支（四维自检，行为不变）---
     prompt = build_writer_prompt_full(
         ch.subject, ch.title, ch.pdf, ch.pages, ocr_text, guide_text, answer_note, answer_key
     )
-    cheatsheet, u3, endpoint = write_cheatsheet(prompt, api_key)
-    for k in grand:
-        grand[k] += int(u3.get(k, 0) or 0)
-    out_p.write_text(cheatsheet, encoding="utf-8")
+    cheatsheet, check_res, repair_rounds, verdict = _write_and_repair(
+        prompt, api_key, out_p, ch, ocr_text, grand
+    )
     print(
-        f"    写稿完成 {time.time() - t0:.1f}s，端点={endpoint}，"
-        f"in={u3.get('prompt_tokens', '?')} out={u3.get('completion_tokens', '?')}，"
+        f"    写稿+react 完成 {time.time() - t0:.1f}s，"
+        f"in={grand.get('prompt_tokens', '?')} out={grand.get('completion_tokens', '?')}，"
         f"{len(cheatsheet)} 字，写入 {out_p}"
     )
-    return ChapterResult(out_p, ocr_p, len(cheatsheet), time.time() - t_start, grand)
+    return ChapterResult(
+        out_p,
+        ocr_p,
+        len(cheatsheet),
+        time.time() - t_start,
+        grand,
+        check_result=check_res,
+        repair_rounds=repair_rounds,
+        final_verdict=verdict,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -738,8 +960,29 @@ def load_netfix_answer() -> str:
     return text
 
 
-def run_netfix() -> None:
-    """重生计算机网络 8 章：强制覆盖已存在文件，并把书末统一答案作为上下文喂给写稿模型。"""
+def _expanded_path_for(out_p: Path) -> Path:
+    """给定主交付路径，返回对应的 *-expanded.md 路径（skill 双输出约定）。"""
+    return out_p.with_name(out_p.stem + "-expanded.md")
+
+
+def _chapter_done(out_p: Path, use_skill: bool) -> bool:
+    """判断该章是否已生成（决定 run_all / run_netfix 的 skip）。
+
+    - 非 skill 模式：仅看主文件 out_p 是否存在（向后兼容现有行为）。
+    - skill 模式：concise + expanded 两个文件都存在才算 done（否则补生缺的）。
+    """
+    if not out_p.exists():
+        return False
+    if use_skill:
+        return _expanded_path_for(out_p).exists()
+    return True
+
+
+def run_netfix(use_skill: bool = False) -> None:
+    """重生计算机网络 8 章：强制覆盖已存在文件，并把书末统一答案作为上下文喂给写稿模型。
+
+    use_skill=True 时启用 cheatsheet-creator skill 方法论分支（双输出 + 考试信号注入）。
+    """
     api_key = load_api_key()
     guide_text = MAIN_GUIDE.read_text(encoding="utf-8")
     answer_key = load_netfix_answer()
@@ -748,7 +991,8 @@ def run_netfix() -> None:
     done = failed = 0
     _log_netfix(
         f"\n===== 计网重生启动 {_ts()}  共 {total} 章  "
-        f"书末答案 {len(answer_key)} 字（强制覆盖）====="
+        f"书末答案 {len(answer_key)} 字（强制覆盖）"
+        f"  skill={'ON' if use_skill else 'OFF'} ====="
     )
     print(f"[netfix] 书末答案已载入 {len(answer_key)} 字，将喂给写稿模型")
     for n, ch in enumerate(chapters, 1):
@@ -756,12 +1000,15 @@ def run_netfix() -> None:
         print(f"\n========== [netfix {n}/{total}] {tag} 页{ch.pages}（强制覆盖）==========")
         _log_netfix(f"| {ch.subject} | 第{ch.idx}章 {ch.title} | START 页{ch.pages} | - | - | - | {_ts()} |")
         try:
-            res = run_chapter_full(ch, api_key, guide_text, answer_key=answer_key)
+            res = run_chapter_full(
+                ch, api_key, guide_text, answer_key=answer_key, use_skill=use_skill
+            )
             done += 1
             _log_netfix(
                 f"| {ch.subject} | 第{ch.idx}章 {ch.title} | DONE | "
                 f"{res.elapsed:.0f}s | tok={res.tokens['total_tokens']} | {res.char_count}字 | {_ts()} |"
             )
+            _log_netfix(_format_check_log_line(ch, res))
         except Exception as e:  # 单章异常不中断整批
             failed += 1
             import traceback
@@ -774,16 +1021,25 @@ def run_netfix() -> None:
     print(f"\n计网重生结束：DONE={done} FAILED={failed} / {total}")
 
 
-def run_all() -> None:
+def run_all(use_skill: bool = False) -> None:
+    """量产全书 50 章。
+
+    use_skill=True 时启用 cheatsheet-creator skill 方法论分支：
+      - skip 判定改为「concise + expanded 都存在」才算已生成（补生缺的）；
+      - 写稿前会触发学科级 exam-signals 挖掘（首次跑会先挖 7 本题目集）。
+    """
     api_key = load_api_key()
     guide_text = MAIN_GUIDE.read_text(encoding="utf-8")
     total = len(CHAPTERS)
     done = skipped = failed = 0
-    _log_progress(f"\n===== 批次启动 {_ts()}  共 {total} 章 =====")
+    _log_progress(
+        f"\n===== 批次启动 {_ts()}  共 {total} 章  "
+        f"skill={'ON' if use_skill else 'OFF'} ====="
+    )
     for n, ch in enumerate(CHAPTERS, 1):
         tag = f"{ch.subject}·第{ch.idx}章 {ch.title}"
         out_p = WORK_DIR / ch.out_path
-        if out_p.exists():
+        if _chapter_done(out_p, use_skill):
             skipped += 1
             print(f"\n[{n}/{total}] 跳过（已存在）：{tag}")
             _log_progress(f"| {ch.subject} | 第{ch.idx}章 {ch.title} | SKIP 已存在 | - | - | - | {_ts()} |")
@@ -791,12 +1047,13 @@ def run_all() -> None:
         print(f"\n========== [{n}/{total}] {tag} 页{ch.pages} ==========")
         _log_progress(f"| {ch.subject} | 第{ch.idx}章 {ch.title} | START 页{ch.pages} | - | - | - | {_ts()} |")
         try:
-            res = run_chapter_full(ch, api_key, guide_text)
+            res = run_chapter_full(ch, api_key, guide_text, use_skill=use_skill)
             done += 1
             _log_progress(
                 f"| {ch.subject} | 第{ch.idx}章 {ch.title} | DONE | "
                 f"{res.elapsed:.0f}s | tok={res.tokens['total_tokens']} | {res.char_count}字 | {_ts()} |"
             )
+            _log_progress(_format_check_log_line(ch, res))
         except Exception as e:  # 单章异常不中断整批
             failed += 1
             import traceback
@@ -812,17 +1069,54 @@ def run_all() -> None:
 
 
 # ---------------------------------------------------------------------------
-# 入口：--all 量产全书；否则跑操作系统第 1 章原型（保留）
+# CLI 入口用法汇总：
+#   --status [--skill]            dry-run：扫描 50 章 + 7 学科 exam-signals，
+#                                  打印 OK/MISSING/NEEDS-REPAIR/STALE 状态表，
+#                                  不写任何文件、不调 API。
+#   --sync [--skill] [--force]    智能同步：MISSING 从零生成 / NEEDS-REPAIR 与
+#                                  STALE 增量修复 / OK 跳过；--force 无条件重生。
+#   --all [--skill]               量产全书 50 章（向后兼容：存在即 skip，
+#                                  --skill 下用 concise+expanded 双文件判定）。
+#   --netfix [--skill]            重生计网 8 章（强制覆盖；喂书末答案）。
+#   --mine-only [--force]         仅挖 7 个学科的 exam-signals.md，不写稿。
+#   --write-only                  复用已有 OCR 中间产物，只跑写稿（原型章）。
+#   （无参数）                     跑操作系统第 1 章原型（渲染+OCR+写稿）。
+#
+# 修饰 flag：--skill（启用 cheatsheet-creator 方法论：双输出 + 考试信号注入）
+#           --force（仅 --mine-only / --sync 接受，强制覆盖）
 # ---------------------------------------------------------------------------
 def main() -> None:
     import sys
+    from src.exam_miner import run_mine_only
+
+    # --skill 是修饰 flag，与 --all / --netfix / --status / --sync 组合使用
+    use_skill = "--skill" in sys.argv
+
+    if "--status" in sys.argv:
+        # dry-run：只读不写，扫描 50 章 + 7 学科 exam-signals 状态
+        from src.sync_state import print_status
+
+        print_status(use_skill=use_skill)
+        return
+
+    if "--sync" in sys.argv:
+        # 智能同步：按状态自动判定从零生成 / 增量修复 / skip
+        from src.sync_state import run_sync
+
+        run_sync(use_skill=use_skill, force="--force" in sys.argv)
+        return
+
+    if "--mine-only" in sys.argv:
+        # --mine-only --force：强制重挖（覆盖已有 exam-signals.md）
+        run_mine_only(force="--force" in sys.argv)
+        return
 
     if "--netfix" in sys.argv:
-        run_netfix()
+        run_netfix(use_skill=use_skill)
         return
 
     if "--all" in sys.argv:
-        run_all()
+        run_all(use_skill=use_skill)
         return
 
     write_only = "--write-only" in sys.argv

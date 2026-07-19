@@ -1,0 +1,5 @@
+
+天行电力培训
+14.在 HDFS 中，Secondary Namenode 是 Namenode 的备用节点。（ ）
+15.Hadoop 是一个分布式流计算框架。（ ）
+16.内存计算下，Spark 相对于 Hadoop 大幅提高了计算速度。（ ）

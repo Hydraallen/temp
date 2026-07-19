@@ -877,6 +877,7 @@ def run_chapter_full(
         prompt = build_writer_prompt_skill(
             ch.subject, ch.title, ch.pdf, ch.pages, ocr_text, guide_text,
             exam_signals=exam_signals, answer_note=answer_note, answer_key=answer_key,
+            chapter_idx=ch.idx,
         )
         cheatsheet, _expanded, check_res, repair_rounds, verdict, skill_res = (
             _write_and_repair_skill(

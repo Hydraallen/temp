@@ -1,0 +1,21 @@
+# --- Secrets / env (defense in depth; Study/.gitignore also covers env, .env) ---
+.env
+env
+*env*.json
+*.secret
+*.key
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.ruff_cache/
+.mypy_cache/
+
+# --- macOS ---
+.DS_Store
+
+# --- Pipeline local artifacts ---
+cheatsheet-render/

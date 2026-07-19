@@ -1,0 +1,13 @@
+
+C. 支持网络负载
+D. 对IP数据报提供安全性
+6、用于区分高优先级帧、最短的帧间间隔是（ ）
+A. DIFS  B. SIFS  C. NAV  D. RTS
+7、无线 Ad Hoc 网络的通信依靠哪种转发方式（ ）
+A. 单跳直连  B. 多跳存储转发  C. AP 转发  D. 以太网转发
+8、SDN 控制器与 OpenFlow 交换机之间的接口称为（ ）
+A. 北向 API  B. 南向 API  C. REST API  D. Intent 接口
+9、MPLS 域内负责给 IP 报文压入标签、剥离标签的边缘设备是（ ）
+A. LSR  B. LER  C. FEC  D. NHLFE
+10、下列哪项不是 CSMA/CA 相比 CSMA/CD 的特点（）
+A. 无碰撞检测  B. 发送后需要 ACK 确认  C. 信道空闲直接发送  D. 采用随机退避机制

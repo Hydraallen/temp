@@ -1,0 +1,39 @@
+
+天行电力培训
+34.执行视图查询时，将视图转换为对应基本表查询的过程称为（）
+A. 视图创建 B. 视图消解 C. 视图更新 D. 视图删除
+35.SQL 中用于实现查询“差集”的关键字是（）
+A. UNION B. INTERSECT C. EXCEPT D. JOIN
+
+二、多选题
+1.下列的 SQL 语句中，（ ）不是数据定义语句。
+A.CREATE B.ROLLBACK C.DROP D.GRANT
+2.定义一个列至少需要（ ）。
+A.数据类型 B.索引 C.键 D.名称
+3.查询数据可以来自（ ）。
+A.一个表 B.多个表 C.多个视图 D.一个视图
+4.（ ）不属于比较运算符。
+A.= B.AND C.!= D.IN
+5.查询员工工资信息时，结果按工资降序排列，不正确的是（ ）。
+A.ORDER BY 工资 B.ORDER BY 工资 DESC C.ORDER BY 工资 ASC D.ORDER BY 工资 DISTINCT
+6.执行查询 LIKE '_A%'，可能在查询结果中的是（ ）。
+A.ABCDE B.BACDE C.BAABB D.CCADE
+7.SELECT STUDENT.NAME, ENROLLMENT.CLASSNAME FROM STUDENT LEFT JOIN ENROLLMENT ON STUDENT.SID = ENROLLMENT.SID；下面描述错误的是（ ）。
+A.来自 Student 表的字段可能出现空值，来自 Enrollment 表的字段不会出现空值
+B.来自 Student 表的字段不会出现空值，来自 Enrollment 表的字段不会出现空值
+C.来自 Student 表的字段不会出现空值，来自 Enrollment 表的字段可能出现空值
+D.来自两个表的字段都可能出空值
+8.用 UNION 合并两个 SELECT 查询的结果时，正确的叙述是（ ）。
+A.查询结果是两个查询中的公共值
+B.两个 SELECT 语句必须输出同样的列数
+C.两个表各相应列的数据类型必须相同
+D.将来自不同查询的数据组合起来
+9.学生成绩表 GRADE 中有字段 SCORE（FLOAT），把所有在 55 分至 60 之间的分数提高 5 分，以下 SQL 语句正确的是（ ）。
+A.UPDATE GRADE SET SCORE=SCORE+5
+B.UPDATE GRADE SET SCORE=SCORE+5 WHERE SCORE>=55 OR SCORE<=60
+C.UPDATE GRADE SET SCORE=SCORE+5 WHERE SCORE BETWEEN 55 AND 60
+D.UPDATE GRADE SET SCORE=SCORE+5 WHERE SCORE>=55 AND SCORE<=60
+10.下面关于视图的说法正确的是（ ）。
+A.视图是由若干表组成的，独立存储在数据库中
+B.视图的存在提高了并发程度
+25

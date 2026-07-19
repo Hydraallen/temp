@@ -1,0 +1,34 @@
+
+D. 线性表采用链式存储，便于进行插入和删除操作
+7、单链表中，增加一个头结点的目的是为了（ ）。
+A. 使单链表至少有一个结点
+B. 标识表结点中首结点的位置
+C. 方便运算的实现
+D. 说明单链表是线性表的链式存储
+8、在单链表指针为p的结点之后插入指针为s的结点，正确的操作是（ ）。
+A. p->next=s; s->next=p->next;
+B. s->next=p->next; p->next=s;
+C. p->next=s; p->next=s->next;
+D. p->next=s->next; p->next=s;
+9、在双向链表存储结构中，删除p所指的结点时须修改指针（ ）。
+A. (p->prior)->next=p->next; (p->next)->prior=p->prior;
+B. p->prior=(p->prior)->prior; (p->prior)->next=p;
+C. (p->next)->prior=p; p->rlink=(p->next)->next;
+D. p->next=(p->prior)->prior; p->prior=(p->next)->next;
+10、完成在双向循环链表结点p之后插入s的操作是（ ）。
+A. p->next=s; s->prior=p; p->next->prior=s; s->next=p->next;
+B. p->next->prior=s; p->next=s; s->prior=p; s->next=p->next;
+C. s->prior=p; s->next=p->next; p->next=s; p->next->prior=s;
+D. s->prior=p; s->next=p->next; p->next->prior=s; p->next=s;
+11、若某线性表中最常用的操作是取第i个元素和找第i个元素的前驱元素，则采用（ ）存储方式最节省运算时间。
+A. 单链表
+B. 顺序表
+C. 双链表
+D. 单循环链表
+12、单链表的存储密度（ ）。
+A. 大于1
+B. 等于1
+C. 小于1
+D. 不能确定
+13、设单循环链表中结点的结构为(data, link)，且first为指向链表表头的指针，current为链表当前指针，在循环链表中检测current是否达到链表表尾的语句是( )。
+12

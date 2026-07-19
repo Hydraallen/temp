@@ -1,0 +1,46 @@
+
+11.SQL 语句中，实现参照完整性控制的语句是（ ）。  
+A. NOT NULL  B. PRIMARY KEY  
+C. UNIQUE  D. FOREIGN KEY  
+12.被 FOREIGN KEY 参照的列在表中应该具有（ ）。  
+A.DEFAULT 约束  B.CHECK 约束  
+C.PRIMARY KEY 约束  D.FOREIGN KEY 约束  
+13.学生（学号，姓名），选课表（学号，课程号，成绩），选课表的学号和学生表的学号之间是（ ）约束。  
+A.DEFAULT  B.CHECK  
+C.PRIMARY KEY  D.FOREIGN KEY  
+14.同属性值限制相比，元组级的限制可以设置（ ）的取值的相互约束条件。  
+A.不同基本表之间  B.不同属性之间  
+C.不同视图之间  D.不同元组之间  
+15.UNIQUE 约束强制了数据的（ ）。  
+A.属性值限制  B.引用值限制  
+C.元组值限制  D.索引值限制  
+16.SQL 在 CREATE TABLE 语句中提供了完整性约束命名子句（ ），用来对完整性约束条件命名。  
+A. CONSTRAINT  B. REFERENCES  
+C. UNIQUE  D. CHECK  
+17.域完整性又称为（ ）。  
+A.列完整性  B.行完整性  
+C.引用完整性  D.约束完整性  
+18.SQL 可以用（ ）语句建立触发器。  
+A.CREATE ASSERTION  B.CREATE TABLE  
+C.CREATE CONSTRAINT  D.CREATE TRIGGER  
+19.触发器可以在（ ）上定义。  
+A.基本表  B.视图  
+C.查询表  D.索引  
+20.触发器按照所触发动作的间隔尺寸可以分为行级触发器、（ ）触发器。  
+A.列级  B.表级  
+C.语句级  D.属性级  
+21.参照完整性违约处理不包括（）  
+A. 拒绝执行  B. 级联操作  C. 置空值  D. 直接删除数据库  
+22.SQL 中用于定义域及域约束的语句是（）  
+A. CREATE DOMAIN  B. CREATE TABLE  C. CREATE TRIGGER  D. CREATE VIEW  
+23.触发器按照触发粒度分为行级和（）  
+A. 列级  B. 语句级  C. 表级  D. 库级  
+24.同一个表上多个触发器的执行顺序正确的是（）  
+A. AFTER → 执行 SQL → BEFORE  
+B. BEFORE → 执行 SQL → AFTER  
+C. 随机执行  
+D. 先 AFTER 后 BEFORE  
+
+二、多选题  
+1.完整性检查和控制的防范对象是（ ）数据，防止它们进入数据库。  
+A.不合语义的  B.非授权的

@@ -23,6 +23,7 @@ from typing import Protocol
 # ---------------------------------------------------------------------------
 MIN_SECTIONS = 3          # (a) 至少识别出 3 个小节标题
 COVERAGE_THRESHOLD = 0.50  # (b) 覆盖率下限
+MIN_TOKENS_FOR_COVERAGE = 5  # (b) 抽到的知识点 token 少于此数 → 信号太弱，记 N/A
 LATEX_BROKEN_MAX = 3       # (c) 未闭合/破损占位总数超过该值判 fail
 MIN_CHARS_BASE = 800       # (d) 字符数下限基数
 MIN_CHARS_PER_PAGE = 80    # (d) 每页追加字符数（按 chapter.pages 比例放大下限）
@@ -131,7 +132,12 @@ def _extract_kp_tokens(ocr_text: str) -> list[str]:
         line = m.group(0).strip()
         body = re.sub(r"^\s*(?:知识点\s*\d*|第[一二三四五六七八九十百\d]+[节章]|\d+\.\d+(?:\.\d+)*|[•·\-])\s*", "", line)
         body = body.strip(" :：-·•\t")
-        if 2 <= len(body) <= 30 and not body.isdigit():
+        # 拒绝句片段噪音：含句末/嵌套标点说明 OCR 抓到的是整句而非关键词
+        if (
+            2 <= len(body) <= 30
+            and not body.isdigit()
+            and not re.search(r"[。，；,;（）()【】！？!?…]", body)
+        ):
             tokens.append(body)
     # 去重保序
     seen: set[str] = set()
@@ -152,12 +158,12 @@ def _check_coverage(md_text: str, ocr_text: str | None) -> tuple[bool, dict]:
             "detail": "ocr_text=None → N/A",
         }
     tokens = _extract_kp_tokens(ocr_text)
-    if not tokens:
+    if len(tokens) < MIN_TOKENS_FOR_COVERAGE:
         return True, {
             "active": False,
             "pass": True,
             "value": None,
-            "detail": "OCR 未抽到知识点锚点 → N/A",
+            "detail": f"OCR 抽到知识点 token 仅 {len(tokens)} < {MIN_TOKENS_FOR_COVERAGE}，信号太弱 → N/A",
         }
     hit = sum(1 for t in tokens if t in md_text)
     ratio = hit / len(tokens)

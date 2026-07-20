@@ -120,3 +120,103 @@
 | 信息技术 | 第三章 人工智能基础 | START 页(44, 57) | - | - | - | 2026-07-06 21:49:16 |
 | 信息技术 | 第三章 人工智能基础 | DONE | 714s | tok=79703 | 11995字 | 2026-07-06 22:01:10 |
 ===== 批次结束 2026-07-06 22:01:10  DONE=42 SKIP=8 FAILED=0 / 50 =====
+
+===== sync 启动  skill=ON  force=False  共 50 章 =====
+| 操作系统 | 第一章 操作系统基础 | SYNC-REPAIR expanded 缺失: 第01章-操作系统基础-expanded.md | - | - | - |
+| 操作系统 | 第一章 操作系统基础 | SYNC-DONE | 933s | tok=110716 | 7374字 | react=0 PASS
+| 操作系统 | 第二章 进程管理 | SYNC-REPAIR expanded 缺失: 第02章-进程管理-expanded.md | - | - | - |
+| 操作系统 | 第二章 进程管理 | SYNC-DONE | 314s | tok=40372 | 10230字 | react=0 PASS
+| 操作系统 | 第三章 处理机调度 | SYNC-REPAIR expanded 缺失: 第03章-处理机调度-expanded.md | - | - | - |
+| 操作系统 | 第三章 处理机调度 | SYNC-DONE | 280s | tok=37278 | 11776字 | react=0 PASS
+| 操作系统 | 第四章 内存管理 | SYNC-REPAIR expanded 缺失: 第04章-内存管理-expanded.md | - | - | - |
+| 操作系统 | 第四章 内存管理 | SYNC-DONE | 602s | tok=26242 | 5497字 | react=0 PASS
+| 操作系统 | 第五章 设备管理 | SYNC-REPAIR expanded 缺失: 第05章-设备管理-expanded.md | - | - | - |
+| 操作系统 | 第五章 设备管理 | SYNC-DONE | 270s | tok=40271 | 14097字 | react=0 PASS
+| 操作系统 | 第六章 文件管理 | SYNC-REPAIR expanded 缺失: 第06章-文件管理-expanded.md | - | - | - |
+| 操作系统 | 第六章 文件管理 | SYNC-DONE | 272s | tok=37753 | 9883字 | react=0 PASS
+| 操作系统 | 第七章 操作系统的安全和保护 | SYNC-REPAIR expanded 缺失: 第07章-操作系统的安全和保护-expanded.md | - | - | - |
+| 操作系统 | 第七章 操作系统的安全和保护 | SYNC-DONE | 347s | tok=39183 | 10885字 | react=0 PASS
+| 计算机网络 | 第一章 计算机网络概述 | SYNC-REPAIR expanded 缺失: 第01章-计算机网络概述-expanded.md | - | - | - |
+| 计算机网络 | 第一章 计算机网络概述 | SYNC-DONE | 501s | tok=75543 | 5020字 | react=1 PASS
+| 计算机网络 | 第二章 物理层 | SYNC-REPAIR expanded 缺失: 第02章-物理层-expanded.md | - | - | - |
+| 计算机网络 | 第二章 物理层 | SYNC-DONE | 58s | tok=26166 | 3821字 | react=0 PASS
+| 计算机网络 | 第三章 数据链路层 | SYNC-REPAIR expanded 缺失: 第03章-数据链路层-expanded.md | - | - | - |
+| 计算机网络 | 第三章 数据链路层 | SYNC-DONE | 487s | tok=20692 | 5543字 | react=0 PASS
+| 计算机网络 | 第四章 网络层 | SYNC-REPAIR expanded 缺失: 第04章-网络层-expanded.md | - | - | - |
+| 计算机网络 | 第四章 网络层 | SYNC-DONE | 486s | tok=73319 | 5472字 | react=1 PASS
+| 计算机网络 | 第五章 传输层 | SYNC-REPAIR expanded 缺失: 第05章-传输层-expanded.md | - | - | - |
+| 计算机网络 | 第五章 传输层 | SYNC-DONE | 892s | tok=106613 | 10432字 | react=3 FAIL-CHECK
+| 计算机网络 | 第六章 应用层协议 | SYNC-REPAIR expanded 缺失: 第06章-应用层协议-expanded.md | - | - | - |
+| 计算机网络 | 第六章 应用层协议 | SYNC-DONE | 348s | tok=57177 | 8006字 | react=1 PASS
+| 计算机网络 | 第七章 网络安全 | SYNC-REPAIR expanded 缺失: 第07章-网络安全-expanded.md | - | - | - |
+| 计算机网络 | 第七章 网络安全 | SYNC-DONE | 299s | tok=32747 | 9559字 | react=0 PASS
+| 计算机网络 | 第八章 无线通信及组网通用配置 | SYNC-REPAIR expanded 缺失: 第08章-无线通信及组网通用配置-expanded.md | - | - | - |
+| 计算机网络 | 第八章 无线通信及组网通用配置 | SYNC-DONE | 679s | tok=71967 | 8549字 | react=1 PASS
+| 软件设计与开发 | 第一章 软件工程学概述及软件开发过程管理 | SYNC-REPAIR expanded 缺失: 第01章-软件工程学概述及软件开发过程管理-expanded.md | - | - | - |
+| 软件设计与开发 | 第一章 软件工程学概述及软件开发过程管理 | SYNC-DONE | 584s | tok=26303 | 3719字 | react=0 PASS
+| 软件设计与开发 | 第二章 可行性及需求分析 | SYNC-REPAIR expanded 缺失: 第02章-可行性及需求分析-expanded.md | - | - | - |
+| 软件设计与开发 | 第二章 可行性及需求分析 | SYNC-DONE | 182s | tok=33408 | 12210字 | react=0 PASS
+| 软件设计与开发 | 第三章 系统设计 | SYNC-REPAIR expanded 缺失: 第03章-系统设计-expanded.md | - | - | - |
+| 软件设计与开发 | 第三章 系统设计 | SYNC-DONE | 146s | tok=32937 | 11865字 | react=0 PASS
+| 软件设计与开发 | 第四章 系统开发及测试 | SYNC-REPAIR expanded 缺失: 第04章-系统开发及测试-expanded.md | - | - | - |
+| 软件设计与开发 | 第四章 系统开发及测试 | SYNC-DONE | 643s | tok=51451 | 17899字 | react=0 PASS
+| 软件设计与开发 | 第五章 系统维护 | SYNC-REPAIR expanded 缺失: 第05章-系统维护-expanded.md | - | - | - |
+| 软件设计与开发 | 第五章 系统维护 | SYNC-DONE | 304s | tok=17896 | 3177字 | react=0 PASS
+| 软件设计与开发 | 第六章 软件项目管理 | SYNC-REPAIR expanded 缺失: 第06章-软件项目管理-expanded.md | - | - | - |
+| 软件设计与开发 | 第六章 软件项目管理 | SYNC-DONE | 266s | tok=43800 | 12250字 | react=0 PASS
+| 数据结构 | 第一章 数据结构基本概念与算法评价 | SYNC-REPAIR expanded 缺失: 第01章-数据结构基本概念与算法评价-expanded.md | - | - | - |
+| 数据结构 | 第一章 数据结构基本概念与算法评价 | SYNC-DONE | 202s | tok=29068 | 7331字 | react=0 PASS
+| 数据结构 | 第二章 线性表 | SYNC-REPAIR expanded 缺失: 第02章-线性表-expanded.md | - | - | - |
+| 数据结构 | 第二章 线性表 | SYNC-DONE | 465s | tok=18380 | 2958字 | react=0 PASS
+| 数据结构 | 第三章 栈和队列 | SYNC-REPAIR expanded 缺失: 第03章-栈和队列-expanded.md | - | - | - |
+| 数据结构 | 第三章 栈和队列 | SYNC-DONE | 241s | tok=27624 | 5655字 | react=0 PASS
+| 数据结构 | 第四章 数组与矩阵的压缩存储 | SYNC-REPAIR expanded 缺失: 第04章-数组与矩阵的压缩存储-expanded.md | - | - | - |
+| 数据结构 | 第四章 数组与矩阵的压缩存储 | SYNC-DONE | 194s | tok=29554 | 8521字 | react=0 PASS
+| 数据结构 | 第五章 树和二叉树 | SYNC-REPAIR expanded 缺失: 第05章-树和二叉树-expanded.md | - | - | - |
+| 数据结构 | 第五章 树和二叉树 | SYNC-DONE | 459s | tok=20366 | 4391字 | react=0 PASS
+| 数据结构 | 第六章 图 | SYNC-REPAIR expanded 缺失: 第06章-图-expanded.md | - | - | - |
+| 数据结构 | 第六章 图 | SYNC-DONE | 205s | tok=32474 | 8895字 | react=0 PASS
+| 数据结构 | 第七章 查找 | SYNC-REPAIR expanded 缺失: 第07章-查找-expanded.md | - | - | - |
+| 数据结构 | 第七章 查找 | SYNC-DONE | 346s | tok=37665 | 9815字 | react=0 PASS
+| 数据结构 | 第八章 内部排序 | SYNC-REPAIR expanded 缺失: 第08章-内部排序-expanded.md | - | - | - |
+| 数据结构 | 第八章 内部排序 | SYNC-DONE | 239s | tok=35064 | 7962字 | react=0 PASS
+| 数据结构 | 第九章 算法设计与分析 | SYNC-REPAIR expanded 缺失: 第09章-算法设计与分析-expanded.md | - | - | - |
+| 数据结构 | 第九章 算法设计与分析 | SYNC-DONE | 87s | tok=18938 | 3985字 | react=0 PASS
+| 数据库 | 第一章 数据库基本概念 | SYNC-REPAIR expanded 缺失: 第01章-数据库基本概念-expanded.md | - | - | - |
+| 数据库 | 第一章 数据库基本概念 | SYNC-DONE | 151s | tok=25585 | 7990字 | react=0 PASS
+| 数据库 | 第二章 关系数据库 | SYNC-REPAIR expanded 缺失: 第02章-关系数据库-expanded.md | - | - | - |
+| 数据库 | 第二章 关系数据库 | SYNC-DONE | 459s | tok=34978 | 9232字 | react=0 PASS
+| 数据库 | 第三章 关系数据理论 | SYNC-REPAIR expanded 缺失: 第03章-关系数据理论-expanded.md | - | - | - |
+| 数据库 | 第三章 关系数据理论 | SYNC-DONE | 208s | tok=29828 | 10730字 | react=0 PASS
+| 数据库 | 第四章 关系数据库标准语言SQL | SYNC-REPAIR expanded 缺失: 第04章-关系数据库标准语言SQL-expanded.md | - | - | - |
+| 数据库 | 第四章 关系数据库标准语言SQL | SYNC-DONE | 313s | tok=21798 | 8959字 | react=0 PASS
+| 数据库 | 第五章 关系查询处理和查询优化 | SYNC-REPAIR expanded 缺失: 第05章-关系查询处理和查询优化-expanded.md | - | - | - |
+| 数据库 | 第五章 关系查询处理和查询优化 | SYNC-DONE | 195s | tok=28423 | 8356字 | react=0 PASS
+| 数据库 | 第六章 数据库安全性 | SYNC-REPAIR expanded 缺失: 第06章-数据库安全性-expanded.md | - | - | - |
+| 数据库 | 第六章 数据库安全性 | SYNC-DONE | 172s | tok=25085 | 10179字 | react=0 PASS
+| 数据库 | 第七章 数据库完整性 | SYNC-REPAIR expanded 缺失: 第07章-数据库完整性-expanded.md | - | - | - |
+| 数据库 | 第七章 数据库完整性 | SYNC-DONE | 90s | tok=18674 | 7395字 | react=0 PASS
+| 数据库 | 第八章 数据库恢复技术 | SYNC-REPAIR expanded 缺失: 第08章-数据库恢复技术-expanded.md | - | - | - |
+| 数据库 | 第八章 数据库恢复技术 | SYNC-DONE | 254s | tok=30663 | 9404字 | react=0 PASS
+| 数据库 | 第九章 并发控制 | SYNC-REPAIR expanded 缺失: 第09章-并发控制-expanded.md | - | - | - |
+| 数据库 | 第九章 并发控制 | SYNC-DONE | 268s | tok=33872 | 8224字 | react=0 PASS
+| 数据库 | 第十章 关系数据库设计理论 | SYNC-REPAIR expanded 缺失: 第10章-关系数据库设计理论-expanded.md | - | - | - |
+| 数据库 | 第十章 关系数据库设计理论 | SYNC-DONE | 303s | tok=15194 | 3625字 | react=0 PASS
+| 计算机组成 | 第一章 计算机系统概述 | SYNC-REPAIR expanded 缺失: 第01章-计算机系统概述-expanded.md | - | - | - |
+| 计算机组成 | 第一章 计算机系统概述 | SYNC-DONE | 211s | tok=27565 | 6773字 | react=0 PASS
+| 计算机组成 | 第二章 数据的机器级表示与运算 | SYNC-REPAIR expanded 缺失: 第02章-数据的机器级表示与运算-expanded.md | - | - | - |
+| 计算机组成 | 第二章 数据的机器级表示与运算 | SYNC-DONE | 298s | tok=45678 | 11199字 | react=0 PASS
+| 计算机组成 | 第三章 指令系统 | SYNC-REPAIR expanded 缺失: 第03章-指令系统-expanded.md | - | - | - |
+| 计算机组成 | 第三章 指令系统 | SYNC-DONE | 237s | tok=30424 | 7662字 | react=0 PASS
+| 计算机组成 | 第四章 中央处理器 | SYNC-REPAIR expanded 缺失: 第04章-中央处理器-expanded.md | - | - | - |
+| 计算机组成 | 第四章 中央处理器 | SYNC-DONE | 278s | tok=33069 | 8066字 | react=0 PASS
+| 计算机组成 | 第五章 存储器分层体系结构 | SYNC-REPAIR expanded 缺失: 第05章-存储器分层体系结构-expanded.md | - | - | - |
+| 计算机组成 | 第五章 存储器分层体系结构 | SYNC-DONE | 295s | tok=36944 | 9541字 | react=0 PASS
+| 计算机组成 | 第六章 互连与输入输出系统 | SYNC-REPAIR expanded 缺失: 第06章-互连与输入输出系统-expanded.md | - | - | - |
+| 计算机组成 | 第六章 互连与输入输出系统 | SYNC-DONE | 596s | tok=27239 | 5545字 | react=0 PASS
+| 计算机组成 | 第七章 并行处理系统 | SYNC-REPAIR expanded 缺失: 第07章-并行处理系统-expanded.md | - | - | - |
+| 计算机组成 | 第七章 并行处理系统 | SYNC-DONE | 875s | tok=35958 | 8515字 | react=0 PASS
+| 信息技术 | 第一章 物联网基础 | SYNC-SKIP OK | - | - | - |
+| 信息技术 | 第二章 大数据基础 | SYNC-SKIP OK | - | - | - |
+| 信息技术 | 第三章 人工智能基础 | SYNC-SKIP OK | - | - | - |
+===== sync 结束  GENERATED=0 REPAIRED=47 SKIPPED=3 FAILED=0 / 50 =====

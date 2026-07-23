@@ -19,3 +19,6 @@ venv/
 
 # --- Pipeline local artifacts ---
 cheatsheet-render/
+
+# Office 临时锁文件
+~$*
